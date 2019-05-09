@@ -91,9 +91,12 @@ The rest of the exercises we'll work on today will be with Ada or Terra OnDemand
 >You can check our [user guide](https://hprc.tamu.edu/wiki/SW:Portal) for more information.
 {: .callout}
 
+Ada/Terra OnDemand uses TAMU CAS for authtication. Click [Terra OnDemand Portal](https://portal-terra.hprc.tamu.edu), and type in your NetID and password. 
 Once you are logged in, you'll see the dashboard. At the top are the pulldown menus we'll use to access the clusters.
 
-![OnDemand Dashboard](../files/Pulldown.png)      ///// PICTURE //////
+![OnDemand Dashboard](../files/Pulldown.png)      
+
+As you are logging in to Terra, you can log in to Ada without further authentication due to the single-sign-on feature of CAS. 
 
 We'll open a shell tab under 'Clusters', select 'Terra shell access'.
 

@@ -22,34 +22,33 @@ How do we ensure that a task is run with the resources it needs?
 This job is handled by a special piece of software called the scheduler.
 On an HPC system, the scheduler manages which jobs run where and when.
 
-The scheduler used in this lesson is PBS Pro (PBS for short).
-Although PBS is not used everywhere, 
-running jobs is quite similar regardless of what software is being used.
+The scheduler used in this lesson is Slurm on Terra.
+The batch schduler used on Ada is LSF. Although we have two different schedulers, 
+running jobs is quite similar regardless of what software is being used. 
 The exact syntax might change, but the concepts remain the same.
 
 ## Running a batch job
 
 The most basic use of the scheduler is to run a command non-interactively.
 This is also referred to as batch job submission.
-In this case, we need to make a script that incorporates some arguments for PBS such as resources needed and modules to load. 
+In this case, we need to make a script that incorporates some arguments for Slurm such as resources needed and modules to load. 
 
 We will use the sleep.sh job script as an example.
-   * Remember to update the project code line: `#PBS -A PZSXXX` with your own project number.
 
-### Parameters
+### Job Specifications
 
-Let's discuss the example PBS script.
+Let's discuss the example Slurm script.
 ```
-test.pbs
+sleep.sh
 ```
 ```
 #!/bin/bash
-#PBS -q debug
-#PBS -A PZSXXXX
-   #Give the job a name 
-#PBS -N test_script
-#PBS -l walltime=00:03:00
-#PBS -l nodes=1:ppn=2
+#SBATCH --job-name=test_script
+#SBATCH --time=00:03:00
+#SBATCH --ntasks=1
+#SBATCH --mem=2560M
+#SBATCH --output=test.out
+#SBATCH --account=123456
 
 echo 'This script is running on:'
 hostname
@@ -62,26 +61,25 @@ Comments in UNIX (denoted by `#`) are typically ignored.
 But there are exceptions.
 For instance the special `#!` comment at the beginning of scripts
 specifies what program should be used to run it (typically `/bin/bash`).
-Schedulers like PBS also have a special comment used to denote special 
+Schedulers like Slurm also have a special comment used to denote special 
 scheduler-specific options.
 Though these comments differ from scheduler to scheduler, 
-PBS's special comment is `#PBS`.
-Anything following the `#PBS` comment is interpreted as an instruction to the scheduler.
+Slurm's special comment is `#SBATCH` and LSF's is `#BSUB`.
+Anything following the scheduler's special comment is interpreted as an instruction to the scheduler.
 
-In our example, we have set the following parameters:
+In our example, we have set the following job parameters:
  
 | Flag | Name | Example Setting | Notes|
 | --- | --- | --- | --- |
-| -q | queue | debug | See next section for queue info |
-| -A | project |PZS| You must specify a project for each job |
-| -N | jobname| test_script | Name of your script (no spaces, alphanumeric only) |
-| -l | resource list| multiple settings| See next segment|
-
-### Resource list
-Resource list will contain a number of settings that informs the PBS scheduler what resources to allocate for your job and for how long (walltime).
+| --job-name | jobname| test_script | Name of your script (no spaces, alphanumeric only) |
+| --time | walltime | 00:03:00 | set the job total walltime to three minutes. |
+| --ntasks | number of tasks| 1 | set number of tasks (or cores) for the job. |
+| --mem| memory per node | 2560M | set total memory per node. |
+| --output | job output file name| test.out | set the name of the output file |
+| --account | project |123456| Optional. To specify a non-default project account. |
 
 #### Walltime
-Walltime is represented by `walltime=00:01:01` in the format HH:MM:SS. This will be how long the job will run before timing out.  If your job exceeds this time the scheduler will terminate the job. It is recommended to find a usual runtime for the job and add some more (say 20%) to it. For example, if a job took approximately 10 hours, the walltime limit could be set to 12 hours, e.g. "-l walltime=12:00:00". By setting the walltime the scheduler can perform job scheduling more efficiently and also reduces occasions where errors can leave the job stalled but still taking up resource for the default much longer walltime limit (for queue walltime defaults run "qstat -q" command)
+Walltime is represented by `walltime=00:01:01` in the format HH:MM:SS. This will be how long the job will run before timing out.  If your job exceeds this time the scheduler will terminate the job. It is recommended to find a usual runtime for the job and add some more (say 20%) to it. For example, if a job took approximately 10 hours, the walltime limit could be set to 12 hours, e.g. "-l walltime=12:00:00". By setting the walltime the scheduler can perform job scheduling more efficiently and also reduces occasions where errors can leave the job stalled but still taking up resource for the default much longer walltime limit.
 
 Resource requests are typically binding.
 If you exceed them, your job will be killed.
@@ -91,24 +89,24 @@ and attempt to run a job for two minutes.
 
 ```
 #!/bin/bash
-
-#PBS -A PZSXXXX
-#PBS -l walltime=00:00:30  ## <- altered to 30 seconds
-#PBS -l nodes=1:ppn=2
+#SBATCH --job-name=test_script
+#SBATCH --time=00:00:30
+#SBATCH --ntasks=1
+#SBATCH --mem=2560M
+#SBATCH --output=test.out
+#SBATCH --account=123456
 
 echo 'This script is running on:'
 hostname
 echo 'The date is :'
 date
 sleep 120
-
 ```
 
-Submit the job and wait for it to finish. 
-Once it is has finished, check the error log file. In the error file, there will be
+Submit the job with `sbatch sleep.sh` and wait for it to finish. 
+Once it is finished, check the output file `test.out`, there will be
 ```
-=>> PBS: job killed: walltime 77 exceeded limit 30
-
+slurmstepd: error: *** JOB 2554410 ON tnxt-0715 CANCELLED AT 2019-05-09T00:28:24 DUE TO TIME LIMIT ***
 ```
 
 Our job was killed for exceeding the amount of resources it requested.
@@ -118,7 +116,7 @@ for your jobs.
 Even more importantly, 
 it ensures that another user cannot use more resources than they've been given.
 If another user messes up and accidentally attempts to use all of the CPUs or memory on a node, 
-PBS will either restrain their job to the requested resources or kill the job outright.
+Slurm will either restrain their job to the requested resources or kill the job outright.
 Other jobs on the node will be unaffected.
 This means that one user cannot mess up the experience of others,
 the only jobs affected by a mistake in scheduling will be their own.
@@ -141,63 +139,56 @@ Each of these parameters have a default setting they will revert to if not set h
 You can find out more information about these parameters by viewing the manual page of the `qsub` function. This will also show you what the default settings are.
 
 ```
-man qsub
+man sbatch
 ```
+
+## Comparison between Slurm and LSF
+
+Job Specifications
+          |   Slurm              | LSF
+node count|
+CPU core count|
+core per node |
+wall clock limit|
+memory per core|
+memory per node|
+sta
+
+User Commands
+
+
+Click [here](https://hprc.tamu.edu/wiki/TAMU_Supercomputing_Facility:HPRC:Batch_Translation) to learn more about the comparison.
+
 
 ## Submitting Jobs via command line
 
-To submit this job to the scheduler, we use the `qsub` command.
+To submit this job to the scheduler, we use the `sbatch` command.
 
 ```
-~> qsub test.pbs
-3818006.owens-batch.ten.osc.edu
-~>
+[username@terra2 ~]$ sbatch sleep.sh
+Submitted batch job 2554410
+(from job_submit) your job is charged as below
+              Project Account: 122841013305
+              Account Balance: 3842.716837
+              Requested SUs:   0.033333333333333
+[username@terra2 ~]$ 
 ```
-The number that first appears is your Job ID. When the job is completed, you will get two files: an Output and an Error file (even if there is no errors). They will be named {JobName}.o{JobID} and {JobName}.e{JobID} respectively.
+The number that appears last in the first line is your Job ID. When the job is completed, you will one file generated by Slurm. The output file contains standard out and standard error generated by the run of your job. We will see how to specify separate standard out and standard error later in the segment 'Comparison between Slurm and LSF'.
 
 And that's all we need to do to submit a job. 
-To check on our job's status, we use the command `qstat`.
+To check on our job's status, we use the command `squeue -u username`
 
 ```
-~> qstat -u username
-owens-batch.ten.osc.edu: 
-                                                                                  Req'd       Req'd       Elap
-Job ID                  Username    Queue    Jobname          SessID  NDS   TSK   Memory      Time    S   Time
------------------------ ----------- -------- ---------------- ------ ----- ------ --------- --------- - ---------
-3818006.owens-batch.te  kcahill     debug    test_script         --      1      2       8gb  00:03:00 Q       --   
+[username@terra2 ~]$ squeue -u username
+JOBID        NAME                 USER             PARTITION    NODES  CPUS  STATE        TIME         TIME_LEFT    START_TIME         REASON                   NODELIST
+2554410      test_script          username         short        1      1     RUNNING      0:38         0:22         2019-05-09T00:26:5 None                     tnxt-0715
 ```
-
 {: .output}
 
-We can see all the details of our job, most importantly if it is in the "R" or "RUNNING" state.
+We can see all the details of our job, most importantly if it is in "RUNNING" state.
 Sometimes our jobs might need to wait in a queue ("QUEUED") or have an error.
-The best way to check our job's status is with `qstat`. It is easiest to view just your own jobs
-in the queue with the `qstat -u username`. Otherwise, you get the entire queue.
-
-## Submit Jobs with job composer on OnDemand
-
-OnDemand also has a tool for job creation and submission to the batch system. The same information as above applies since
-it still uses the same underlying queue system. In the Job Composer, you can create a new location in your home directory
-for a new job, create or transfer a job script and input files, edit everything, and submit your job all from this screen.
-
-We will run this job in the Job Composer by creating a new job from _specified path_.
-
-![NewJob](../files/NewJob.png)
-
-You'll see the Job Options page, like this:
-
-![JobOptions](../files/JobOptions.png)
-
-Fill it in as shown. You need to fill in your own path and then select Save.
-
-
-To run the job, select green 'play' button.
-
-If job successfully submitted, a green bar will appear on the top of the page.
-
-Also, OnDemand allows you to view the queue for all systems (not just the one you are on in the shell) under Jobs, select
-Active Jobs. You can filter by your jobs, your group's jobs, and all jobs.
-
+The best way to check our job's status is with `squeue`. It is easiest to view just your own jobs
+in the queue with the `squeue -u username`. Otherwise, you get the entire queue.
 
 ## Queues
 
@@ -286,5 +277,30 @@ qsub -I -A PZSXXX -l nodes=1:ppn=28 -l walltime=00:01:00
 ```
 {: .bash}
 
-You can also request interactive jobs on OnDemand using the Interative Apps menu
+You can also request interactive jobs on OnDemand using the Interative Apps menu and select the vnc app.
 
+## Submit Jobs with Job Composer on OnDemand
+
+OnDemand also has a tool for job creation and submission to the batch system. The same information as above applies since
+it still uses the same underlying queue system. In the Job Composer, you can create a new location in your home directory
+for a new job, create or transfer a job script and input files, edit everything, and submit your job all from this screen.
+
+We will run this job in the Job Composer by creating a new job from _specified path_.
+
+![NewJob](../files/NewJob.png)
+
+You'll see the Job Options page, like this:
+
+![JobOptions](../files/JobOptions.png)
+
+Fill it in as shown. You need to fill in your own path and then select Save.
+
+
+To run the job, select green 'play' button.
+
+If job successfully submitted, a green bar will appear on the top of the page.
+
+Also, OnDemand allows you to view the queue for all systems (not just the one you are on in the shell) under Jobs, select
+Active Jobs. You can filter by your jobs, your group's jobs, and all jobs.
+
+## View Job Status with Active Jobs on OnDemand

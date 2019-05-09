@@ -79,10 +79,10 @@ It should never be used for doing actual work. Login nodes only have 1 hour CPU 
 The real work on a cluster gets done by the compute nodes.
 Compute nodes come in many shapes and sizes, but generally are dedicated to doing all of the heavy lifting that needs doing. 
 All interaction with the compute nodes is handled by a specialized piece of software called a scheduler. We use the LSF on Ada and Slurm on Terra.
-We can view all of the worker nodes with the `lshosts` command on Ada and `sinfo -o %n` on Terra. But this would be overwhelming since we have over 800 compute nodes on Ada and over 300 compute nodes on Terra, so we'll abbreviate it instead.
+We can view all of the worker nodes with the `lshosts` command on Ada and `sinfo -o %n` on Terra. Below is an example on Terra.
 
 ```
-sinfo -o %n |head -20
+sinfo -o %n |more
 ```
 {: .bash}
 ```
@@ -109,13 +109,6 @@ tnxt-0315
 
 ```
 {: .output}
-
-There are also specialized machines used for managing disk storage, user authentication, 
-and other infrastructure-related tasks. 
-Although we do not interact with these directly, 
-but these enable a number of key features like ensuring our user account and files are available throughout the cluster.
-This is an important point to remember: 
-files saved on one node (computer) are available everywhere on the cluster!
 
 ![Structure of Cluster](../files/cluster_login.jpg)
 
@@ -145,7 +138,11 @@ Disk       Disk Usage      Limit    File Usage      Limit
 
 ## Moving files to and from the remote system from and to your local computer
 
-It is often necessary to move data from your local computer to the remote system and vice versa.  There are many ways to do this and we will look at two here: `scp` and `sftp`.
+It is often necessary to move data from your local computer to the remote system and vice versa.  
+
+If you are on a Windows machine, you will need [WinSCP](https://winscp.net/eng/index.php) or [FileZilla](https://filezilla-project.org) to transfer files between your local machine and a remote cluster.
+
+If you are on a Linux machine or Mac,  there are many ways to do this and we will look at two here: `scp` and `sftp`.
 
 ### `scp` from your local computer to the remote system
 The most basic command line tool for moving files around is secure copy or `scp`.
@@ -153,7 +150,7 @@ The most basic command line tool for moving files around is secure copy or `scp`
 `scp` behaves similarily to `ssh` but with one additional input, the name of the file to be copied.  If we were in the shell on our local computer, the file we wanted to move was in our current directory, named "globus.tgz", and Nelle wanted to move it to her home directory on OSC then the command would be
 	
 ~~~
-[local]$ scp fileToMove nelle@owens.osc.edu:
+[local]$ scp fileToMove username@terra.tamu.edu:
 ~~~
 {: .bash}
 	
@@ -195,11 +192,11 @@ cluster by dragging and dropping or using the upload and download buttons.
 {: .challenge}
 
 
-## Grabbing files from the internet
+## Grabbing files from the Internet
 
-To download files from the internet, 
+To download files from the Internet, 
 the absolute best tool is `wget`.
-The syntax is relatively straightforwards: `wget https://some/link/to/a/file.tar.gz`
+The syntax is relatively straightforward: `wget https://path/to/file.tar.gz`
 
 > ## Downloading the Drosophila genome
 > The *Drosophila melanogaster* reference genome is located at the following website:
