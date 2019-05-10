@@ -229,26 +229,26 @@ Absence of any job info indicates that the job has been successfully canceled.
 ### Job Specifications
 | Option | Slurm  |  LSF |
 |---|---|---|
-Directive | #SBATCH | #BSUB |
-node count| -N,--nodes=<minnodes[-maxnodes]> | N/A |
-core count| -n, --ntasks=<count> | -n <count> |
-tasks per node | --ntasks-per-node=<count> | -R "span[ptile=count]"
-wall clock limit| -t, --time=<days-hh:mm:ss> or <hh:mm:ss> | -W [hh:mm] |
-memory per core|  --mem-per-cpu=<size[units]> (unit is M/G/T) |-M <size> -R "rusage[mem=size]"|
-memory per node|N/A |  --mem=<size[units]>|
-queue | -p, --partition=<queuename> | -q <queuename> |
+| Directive | #SBATCH | #BSUB |
+| node count| -N,--nodes=<minnodes[-maxnodes]> | N/A |
+| core count| -n, --ntasks=<count> | -n <count> |
+| tasks per node | --ntasks-per-node=<count> | -R "span[ptile=count]"
+| wall clock limit| -t, --time=<days-hh:mm:ss> or <hh:mm:ss> | -W [hh:mm] |
+| memory per core|  --mem-per-cpu=<size[units]> (unit is M/G/T) |-M <size> -R "rusage[mem=size]"|
+| memory per node|N/A |  --mem=<size[units]>|
+| queue | -p, --partition=<queuename> | -q <queuename> |
 
 ### User Commands
 | Operation | Slurm  |  LSF |
 |---|---|---|
-|submit a job |  sbatch jobfile | bsub < jobfile|
-|check job status| squeue [-u username] | bjobs jobid|
-|cancel a job| scancel jobid | bkill jobid|
+| submit a job |  sbatch jobfile | bsub < jobfile|
+| check job status| squeue [-u username] | bjobs jobid|
+| cancel a job| scancel jobid | bkill jobid|
 
 ### Environment Variables
 | Variable Name | Slurm  |  LSF   |
 |---|---|---|
-|Job id|  SLURM_JOB_ID| LSB_JOBID |     
+| Job id|  SLURM_JOB_ID| LSB_JOBID |     
 | Node list| SLURM_JOB_NODELIST|  LSB_HOSTS (or LSB_DJOB_HOSTFILE)  |
 
 
@@ -256,7 +256,9 @@ You can find out more information about these parameters by viewing the manual p
 
 > ## References
 > Click [here](https://hprc.tamu.edu/wiki/TAMU_Supercomputing_Facility:HPRC:Batch_Translation) to learn more about the comparison.
+>
 > For more information about Slurm, check [Slurm documentation](https://slurm.schedmd.com/).
+>
 > For more information about LSF, check [LSF documentation](https://www.ibm.com/support/knowledgecenter/en/SSETD4_9.1.3/lsf_welcome.html).
 {: .callout}
 
