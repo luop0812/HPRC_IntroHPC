@@ -192,14 +192,9 @@ Slurm sets multiple environment variables at submission time. The following Slur
 | Variable Name |  Description | Example Values |
 |---|---|---|
 | SLURM_JOB_ID| Containss Slurm job id|2554410 |     
-| SLURM_JOB_NODEFILE|  Contains a list of the nodes assigned to the job.  | tnxt-[0465-0466,0468-0469] |
+| SLURM_JOB_NODELIST|  Contains a list of the nodes assigned to the job.  | tnxt-[0465-0466,0468-0469] |
 
 
-> ## Quick Reference
->A good reference for these and other PBS variables is part of our [Batch Processing at OSC](https://www.osc.edu/supercomputing/batch-processing-at-osc) pages under [Batch-Related Command Summary](https://www.osc.edu/supercomputing/batch-processing-at-osc/batch-related-command-summary).
-{: .callout}
-
-## Canceling a job
 
 
 Sometimes we'll make a mistake and need to cancel a job.
@@ -244,14 +239,28 @@ memory per node|N/A |  --mem=<size[units]>|
 queue | -p, --partition=<queuename> | -q <queuename> |
 
 ### User Commands
+| Operation | Slurm  |  LSF |
+|---|---|---|
+|submit a job |  sbatch jobfile | bsub < jobfile|
+|check job status| squeue [-u username] | bjobs jobid|
+|cancel a job| scancel jobid | bkill jobid|
 
 ### Environment Variables
-| Variable Name |  Description | Example Values |
+| Variable Name | Slurm  |  LSF   |
 |---|---|---|
+|Job id|  SLURM_JOB_ID| LSB_JOBID |     
+| Node list| SLURM_JOB_NODELIST|  LSB_HOSTS (or LSB_DJOB_HOSTFILE)  |
 
-Click [here](https://hprc.tamu.edu/wiki/TAMU_Supercomputing_Facility:HPRC:Batch_Translation) to learn more about the comparison.
 
 You can find out more information about these parameters by viewing the manual page of `sbatch` on Terra and `bsub` on Ada. 
+
+> ## References
+> Click [here](https://hprc.tamu.edu/wiki/TAMU_Supercomputing_Facility:HPRC:Batch_Translation) to learn more about the comparison.
+> For more information about Slurm, check [Slurm documentation](https://slurm.schedmd.com/).
+> For more information about LSF, check [LSF documentation](https://www.ibm.com/support/knowledgecenter/en/SSETD4_9.1.3/lsf_welcome.html).
+{: .callout}
+
+## Canceling a job
 
 ```
 username@terra2 ~]$ man sbatch
