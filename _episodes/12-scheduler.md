@@ -227,11 +227,11 @@ Absence of any job info indicates that the job has been successfully canceled.
 ## Comparison between Slurm and LSF
 
 ### Job Specifications
+
+
 | Option | Slurm  |  LSF |
 |---|---|---|
 | Directive | #SBATCH | #BSUB |
-
-
 | node count | -N,--nodes=<minnodes[-maxnodes]> | N/A |
 | core count | -n, --ntasks=<count> | -n <count> |
 | tasks per node | --ntasks-per-node=<count> | -R "span[ptile=count]" |
@@ -241,6 +241,8 @@ Absence of any job info indicates that the job has been successfully canceled.
 | queue | -p, --partition=<queuename> | -q <queuename> |
 
 ### User Commands
+
+
 | Operation | Slurm  |  LSF |
 |---|---|---|
 | submit a job |  sbatch jobfile | bsub < jobfile |
@@ -248,6 +250,8 @@ Absence of any job info indicates that the job has been successfully canceled.
 | cancel a job | scancel jobid | bkill jobid |
 
 ### Environment Variables
+
+
 | Variable Name | Slurm  |  LSF   |
 |---|---|---|
 | Job id |  SLURM_JOB_ID | LSB_JOBID |     
