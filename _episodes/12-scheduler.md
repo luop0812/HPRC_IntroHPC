@@ -269,20 +269,6 @@ username@terra2 ~]$ man sbatch
 username@ada1 ~]$ man bsub
 ```
 
-### Interactive jobs
-
-Sometimes, you will need a lot of resource for interactive use.
-Perhaps it's the first time running an analysis 
-or we are attempting to debug something that went wrong with a previous job.
-Fortunately, PBS makes it easy to start an interactive job with `qsub -I`:
-
-```
-qsub -I -A PZSXXX -l nodes=1:ppn=28 -l walltime=00:01:00 
-```
-{: .bash}
-
-You can also request interactive jobs on OnDemand using the Interative Apps menu and select the vnc app.
-
 ## Submit Jobs with Job Composer on OnDemand
 
 OnDemand also has a tool for job creation and submission to the batch system. The same information as above applies since
@@ -308,7 +294,7 @@ Also, OnDemand allows you to view the queue for all systems (not just the one yo
 Active Jobs. You can filter by your jobs, your group's jobs, and all jobs.
 > ## Submit a job from a template in the Job Composer
 >
-> Find MPI Hello World job in the templates
+> Find  job in the templates
 >
 > Edit the job script to correct the project number
 >
@@ -316,4 +302,3 @@ Active Jobs. You can filter by your jobs, your group's jobs, and all jobs.
 {: .challenge}
 
 
-## View Job Status with Active Jobs on OnDemand
