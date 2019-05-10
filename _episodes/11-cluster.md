@@ -196,7 +196,7 @@ cluster by dragging and dropping or using the upload and download buttons.
 
 To download files from the Internet, 
 the absolute best tool is `wget`.
-The syntax is relatively straightforward: `wget https://path/to/file.tar.gz`
+The syntax is relatively straightforward: `wget https://some_url/file.tar.gz`
 
 > ## Downloading the Drosophila genome
 > The *Drosophila melanogaster* reference genome is located at the following website:
