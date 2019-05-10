@@ -27,10 +27,13 @@ The batch schduler used on Ada is LSF. Although we have two different schedulers
 running jobs is quite similar regardless of what software is being used. 
 The exact syntax might change, but the concepts remain the same.
 
+In the following presentation, we will use Slurm to illustrate the various concepts related to batch jobs. After that, we will show the comparison between Slurm and LSF so that you can learn how to use LSF easily.  
+
 ## Running a batch job
 
-The most basic use of the scheduler is to run a command non-interactively.
-This is also referred to as batch job submission.
+From section 2, we learned how to run a command after the command line prompt. This is called to run a command interactively.
+The most basic use of the scheduler is to run a command non-interactively. 
+This is also referred to as batch job submission. 
 In this case, we need to make a script that incorporates some arguments for Slurm such as resources needed and modules to load. 
 
 We will use the sleep.sh job script as an example.
@@ -48,7 +51,6 @@ sleep.sh
 #SBATCH --ntasks=1
 #SBATCH --mem=2560M
 #SBATCH --output=test.out
-#SBATCH --account=123456
 
 echo 'This script is running on:'
 hostname
@@ -64,7 +66,7 @@ specifies what program should be used to run it (typically `/bin/bash`).
 Schedulers like Slurm also have a special comment used to denote special 
 scheduler-specific options.
 Though these comments differ from scheduler to scheduler, 
-Slurm's special comment is `#SBATCH` and LSF's is `#BSUB`.
+Slurm's special comment is `#SBATCH`.
 Anything following the scheduler's special comment is interpreted as an instruction to the scheduler.
 
 In our example, we have set the following job parameters:
@@ -76,16 +78,20 @@ In our example, we have set the following job parameters:
 | --ntasks | number of tasks| 1 | set number of tasks (or cores) for the job. |
 | --mem| memory per node | 2560M | set total memory per node. |
 | --output | job output file name| test.out | set the name of the output file |
-| --account | project |123456| Optional. To specify a non-default project account. |
 
 #### Walltime
-Walltime is represented by `walltime=00:01:01` in the format HH:MM:SS. This will be how long the job will run before timing out.  If your job exceeds this time the scheduler will terminate the job. It is recommended to find a usual runtime for the job and add some more (say 20%) to it. For example, if a job took approximately 10 hours, the walltime limit could be set to 12 hours, e.g. "-l walltime=12:00:00". By setting the walltime the scheduler can perform job scheduling more efficiently and also reduces occasions where errors can leave the job stalled but still taking up resource for the default much longer walltime limit.
+Walltime is represented by `walltime=00:03:00` in the format HH:MM:SS. This will be how long the job will run before timing out.  If your job exceeds this time the scheduler will terminate the job. It is recommended to find a usual runtime for the job and add some more (say 20%) to it. For example, if a job took approximately 10 hours, the walltime limit could be set to 12 hours, e.g. "-l walltime=12:00:00". By setting the walltime the scheduler can perform job scheduling more efficiently and also reduces occasions where errors can leave the job stalled but still taking up resource for the default much longer walltime limit.
 
 Resource requests are typically binding.
 If you exceed them, your job will be killed.
 Let's use walltime as an example.
 We will request 30 seconds of walltime, 
 and attempt to run a job for two minutes.
+
+> ## Editing walltime in sleep.sh 
+>
+> Edit sleep.sh using the editor from the OnDemand portal and change the walltime to 30 seconds. 
+{: .challenge}
 
 ```
 #!/bin/bash
@@ -121,43 +127,16 @@ Other jobs on the node will be unaffected.
 This means that one user cannot mess up the experience of others,
 the only jobs affected by a mistake in scheduling will be their own.
 
-#### Compute Resources and Parameters
-Compute parameters, represented by `nodes=1:ppn=2` can be considered individually. The argument `nodes` specifies the number of nodes (or chunks of resource) required; `ppn` indicates the number of CPUs per chunk required.
+#### Node, CPU, Processor, Core
+There are some terms we need to know to help us understand the parameters used in batch schedulerss.
+A node refers to a computer in the cluster (remember, a cluster consists of many computers). 
+CPU stands for Central Processing Unit. There are single core CPUs (which is rare nowadays) and multiple core CPUs. 
+A core is the smallest processing unit in a CPU. A processor is usually referred to as a core. 
+But, sometimes, all three terms( CPU, processor, and core) are all synonyms.
+It can only be distinquished within a context.
 
-
-| nodes |  ppn |  Description|
-|---|---|---|
-| 2|  16|  32 Processor job, using 2 nodes and 16 processors per node| 
-| 4|  8|  32 Processor job, using 4 nodes and 8 processors per node| 
-| 16|  1|  16 Processor job, using 16 nodes and 1 processor per node| 
-| 8 | 16 | 128 Processor job, using 8 nodes and 16 processors per node|
-
-
-
-Each of these parameters have a default setting they will revert to if not set however this means your script may act differently to what you expect.
-
-You can find out more information about these parameters by viewing the manual page of the `qsub` function. This will also show you what the default settings are.
-
-```
-man sbatch
-```
-
-## Comparison between Slurm and LSF
-
-Job Specifications
-          |   Slurm              | LSF
-node count|
-CPU core count|
-core per node |
-wall clock limit|
-memory per core|
-memory per node|
-sta
-
-User Commands
-
-
-Click [here](https://hprc.tamu.edu/wiki/TAMU_Supercomputing_Facility:HPRC:Batch_Translation) to learn more about the comparison.
+For example, each Terra node contains dual CPUs and each CPU contains 14 cores, and each Ada node contains dual CPUs and each CPU contains 10 cores.
+So each Terra node has total 28 cores, while each Ada node has total 20 cores. 
 
 
 ## Submitting Jobs via command line
@@ -192,10 +171,11 @@ in the queue with the `squeue -u username`. Otherwise, you get the entire queue.
 
 ## Queues
 
-There are usually a number of available queues to use on your HPC. Remember: Each cluster has separate queues. Right now, we 
-are looking only at the queues on Owens. The other clusters have similar queues but they are not the same. 
-To see what queues are available, you can use the command `qstat -Q`. You do not have to specify a queue for most jobs. 
-Your job will be routed to the appropriate queue based on node and walltime request.
+There are usually a number of available queues to use on your HPC. Remember: Each cluster has separate queues. 
+However, at TAMU HPRC, we don't specify a queue unless our job need special queue. The scheduler will route 
+a job to a queue fits the job's specifications. 
+
+Special queues include xlarge, gpu, and vnc etc. To use a special queue, you need to add `#SBATCH --partition=[queuename]`.
 
 
 > ## Submitting resource requests
@@ -206,22 +186,14 @@ Your job will be routed to the appropriate queue based on node and walltime requ
 
 ## Job environment variables
 
-PBS sets multiple environment variables at submission time. The following PBS variables are commonly used in command files: 
+Slurm sets multiple environment variables at submission time. The following Slurm variables are commonly used in command files: 
 
 
-| Variable Name |  Description |
-|---|---|
-| PBS_ARRAYID|  Array ID numbers for jobs submitted with the -t flag. For example a job submitted with #PBS -t 1-8 will run eight identical copies of the shell script. The value of the PBS_ARRAYID will be an integer between 1 and 8.|
-| PBS_ENVIRONMENT|  Set to PBS_BATCH to indicate that the job is a batch job; otherwise, set to PBS_INTERACTIVE to indicate that the job is a PBS interactive job.|
-| PBS_JOBID|  Full jobid assigned to this job. Often used to uniquely name output files for this job, for example: mpirun - np 16 ./a.out >output.${PBS_JOBID}|
-| PBS_JOBNAME|  Name of the job. This can be set using the -N option in the PBS script (or from the command line). The default job name is the name of the PBS script.|
-| PBS_NODEFILE|  Contains a list of the nodes assigned to the job. If multiple CPUs on a node have been assigned, the node will be listed in the file more than once. By default, mpirun assigns jobs to nodes in the order they are listed in this file |
-| PBS_O_HOME|  The value of the HOME variable in the environment in which qsub was executed.|
-| PBS_O_HOST|  The name of the host upon which the qsub command is running.|
-| PBS_O_PATH|  Original PBS path. Used with pbsdsh.|
-| PBS_O_QUEUE|  Queue job was submitted to.|
-| PBS_O_WORKDIR|  PBS sets the environment variable PBS_O_WORKDIR to the directory from which the batch job was submitted PBS_QUEUE Queue job is running in (typically this is the same as PBS_O_QUEUE). |
-| $TEMPDIR|  Compute node where job is assigned.|
+| Variable Name |  Description | Example Values |
+|---|---|---|
+| SLURM_JOB_ID| Containss Slurm job id|2554410 |     
+| SLURM_JOB_NODEFILE|  Contains a list of the nodes assigned to the job.  | tnxt-[0465-0466,0468-0469] |
+
 
 > ## Quick Reference
 >A good reference for these and other PBS variables is part of our [Batch Processing at OSC](https://www.osc.edu/supercomputing/batch-processing-at-osc) pages under [Batch-Related Command Summary](https://www.osc.edu/supercomputing/batch-processing-at-osc/batch-related-command-summary).
@@ -231,11 +203,11 @@ PBS sets multiple environment variables at submission time. The following PBS va
 
 
 Sometimes we'll make a mistake and need to cancel a job.
-This can be done with the `qdel` command.
+This can be done with the `cancel` command.
 Let's submit a job and then cancel it using its job number.
 
 ```
-> qsub test2.pbs
+> sbatch test.sh
 3818018.owens-batch.ten.osc.edu
 
 > qstat -u kcahill
@@ -264,6 +236,31 @@ Absence of any job info indicates that the job has been successfully canceled.
 >Submit job and view results
 {: .challenge}
 
+## Comparison between Slurm and LSF
+
+Job Specifications
+          |   Slurm              | LSF
+node count|
+CPU core count|
+core per node |
+wall clock limit|
+memory per core|
+memory per node|
+sta
+
+User Commands
+
+
+Click [here](https://hprc.tamu.edu/wiki/TAMU_Supercomputing_Facility:HPRC:Batch_Translation) to learn more about the comparison.
+
+You can find out more information about these parameters by viewing the manual page of `sbatch` on Terra and `bsub` on Ada. 
+
+```
+username@terra2 ~]$ man sbatch
+```
+```
+username@ada1 ~]$ man bsub
+```
 
 ### Interactive jobs
 
