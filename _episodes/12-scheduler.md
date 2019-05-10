@@ -240,6 +240,7 @@ Absence of any job info indicates that the job has been successfully canceled.
 | memory per node | N/A |  --mem=<size[units]> |
 | queue | -p, --partition=<queuename> | -q <queuename> |
 
+
 ### User Commands
 
 
@@ -248,6 +249,8 @@ Absence of any job info indicates that the job has been successfully canceled.
 | submit a job |  sbatch jobfile | bsub < jobfile |
 | check job status | squeue [-u username] | bjobs jobid |
 | cancel a job | scancel jobid | bkill jobid |
+
+
 
 ### Environment Variables
 
