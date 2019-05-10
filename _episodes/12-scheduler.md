@@ -27,11 +27,12 @@ The batch schduler used on Ada is LSF. Although we have two different schedulers
 running jobs is quite similar regardless of what software is being used. 
 The exact syntax might change, but the concepts remain the same.
 
-In the following presentation, we will use Slurm to illustrate the various concepts related to batch jobs. After that, we will show the comparison between Slurm and LSF so that you can learn how to use LSF easily.  
+In the following presentation, we will use Slurm to illustrate the various concepts related to batch jobs. 
+After that, we will show the comparison between Slurm and LSF so that you can learn how to use LSF easily.  
 
 ## Running a batch job
 
-From section 2, we learned how to run a command after the command line prompt. This is called to run a command interactively.
+In section 2, we learned how to run a command next to the command line prompt. This is called to run a command interactively.
 The most basic use of the scheduler is to run a command non-interactively. 
 This is also referred to as batch job submission. 
 In this case, we need to make a script that incorporates some arguments for Slurm such as resources needed and modules to load. 
@@ -132,12 +133,11 @@ There are some terms we need to know to help us understand the parameters used i
 A node refers to a computer in the cluster (remember, a cluster consists of many computers). 
 CPU stands for Central Processing Unit. There are single core CPUs (which is rare nowadays) and multiple core CPUs. 
 A core is the smallest processing unit in a CPU. A processor is usually referred to as a core. 
-But, sometimes, all three terms( CPU, processor, and core) are all synonyms.
-It can only be distinquished within a context.
 
 For example, each Terra node contains dual CPUs and each CPU contains 14 cores, and each Ada node contains dual CPUs and each CPU contains 10 cores.
 So each Terra node has total 28 cores, while each Ada node has total 20 cores. 
 
+But, sometimes, all three terms( CPU, processor, and core) mean a processor, especially in batch scheduler terminology.
 
 ## Submitting Jobs via command line
 
@@ -167,13 +167,13 @@ JOBID        NAME                 USER             PARTITION    NODES  CPUS  STA
 We can see all the details of our job, most importantly if it is in "RUNNING" state.
 Sometimes our jobs might need to wait in a queue ("QUEUED") or have an error.
 The best way to check our job's status is with `squeue`. It is easiest to view just your own jobs
-in the queue with the `squeue -u username`. Otherwise, you get the entire queue.
+in the queue with the `squeue -u username`. Otherwise, you get all the jobs in the queues.
 
 ## Queues
 
 There are usually a number of available queues to use on your HPC. Remember: Each cluster has separate queues. 
-However, at TAMU HPRC, we don't specify a queue unless our job need special queue. The scheduler will route 
-a job to a queue fits the job's specifications. 
+However, on Ada or Terra, we don't specify a queue unless our job need a special queue. The scheduler will route 
+any job to the queue that fits the job's specifications. 
 
 Special queues include xlarge, gpu, and vnc etc. To use a special queue, you need to add `#SBATCH --partition=[queuename]`.
 
@@ -207,14 +207,16 @@ This can be done with the `cancel` command.
 Let's submit a job and then cancel it using its job number.
 
 ```
-> sbatch test.sh
-3818018.owens-batch.ten.osc.edu
+[username@terra2 ~]$ sbatch sleep.sh
+Submitted batch job 2554410
+(from job_submit) your job is charged as below
+              Project Account: 122841013305
+              Account Balance: 3842.716837
+              Requested SUs:   0.033333333333333
 
-> qstat -u kcahill
-                                                                                 Req'd       Req'd       Elap
-Job ID                  Username    Queue    Jobname          SessID  NDS   TSK   Memory      Time    S   Time
------------------------ ----------- -------- ---------------- ------ ----- ------ --------- --------- - ---------
-3818018.owens-batch.te  kcahill     debug    test_script         --      1      2       8gb  00:03:00 Q       --          
+[username@terra2 ~]$ squeue -u username
+JOBID        NAME                 USER             PARTITION    NODES  CPUS  STATE        TIME         TIME_LEFT    START_TIME         REASON                   NODELIST
+2554410      test_script          username         short        1      1     RUNNING      0:38         0:22         2019-05-09T00:26:5 None                     tnxt-0715
 
 ```
 
@@ -222,34 +224,30 @@ Now cancel the job with it's job number.
 Absence of any job info indicates that the job has been successfully canceled.
 
 ```
-> qdel 3818018
-> qstat -u kcahill
->
+[username@terra2 ~]$ scancel 2554410
+[username@terra2 ~]$ squeue -u username
+[username@terra2 ~]$ 
 ```
-
-> ## Submit a job from a template in the Job Composer
->
-> Find MPI Hello World job in the templates
->
-> Edit the job script to correct the project number
->
->Submit job and view results
-{: .challenge}
 
 ## Comparison between Slurm and LSF
 
-Job Specifications
-          |   Slurm              | LSF
-node count|
-CPU core count|
-core per node |
-wall clock limit|
-memory per core|
-memory per node|
-sta
+### Job Specifications
+| Option | Slurm  |  LSF |
+|---|---|---|
+Directive | #SBATCH | #BSUB |
+node count| -N,--nodes=<minnodes[-maxnodes]> | N/A |
+core count| -n, --ntasks=<count> | -n <count> |
+tasks per node | --ntasks-per-node=<count> | -R "span[ptile=count]"
+wall clock limit| -t, --time=<days-hh:mm:ss> or <hh:mm:ss> | -W [hh:mm] |
+memory per core|  --mem-per-cpu=<size[units]> (unit is M/G/T) |-M <size> -R "rusage[mem=size]"|
+memory per node|N/A |  --mem=<size[units]>|
+queue | -p, --partition=<queuename> | -q <queuename> |
 
-User Commands
+### User Commands
 
+### Environment Variables
+| Variable Name |  Description | Example Values |
+|---|---|---|
 
 Click [here](https://hprc.tamu.edu/wiki/TAMU_Supercomputing_Facility:HPRC:Batch_Translation) to learn more about the comparison.
 
@@ -299,5 +297,14 @@ If job successfully submitted, a green bar will appear on the top of the page.
 
 Also, OnDemand allows you to view the queue for all systems (not just the one you are on in the shell) under Jobs, select
 Active Jobs. You can filter by your jobs, your group's jobs, and all jobs.
+> ## Submit a job from a template in the Job Composer
+>
+> Find MPI Hello World job in the templates
+>
+> Edit the job script to correct the project number
+>
+>Submit job and view results
+{: .challenge}
+
 
 ## View Job Status with Active Jobs on OnDemand
