@@ -230,6 +230,8 @@ Absence of any job info indicates that the job has been successfully canceled.
 | Option | Slurm  |  LSF |
 |---|---|---|
 | Directive | #SBATCH | #BSUB |
+
+
 | node count | -N,--nodes=<minnodes[-maxnodes]> | N/A |
 | core count | -n, --ntasks=<count> | -n <count> |
 | tasks per node | --ntasks-per-node=<count> | -R "span[ptile=count]" |
