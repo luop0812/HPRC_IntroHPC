@@ -9,15 +9,11 @@ objectives:
 keypoints:
 - "Load software with `module load softwareName`"
 - "The module system handles software versioning and package conflicts for you automatically."
-- "You can edit your `.bashrc` file to automatically load a software package."
 - "When using software on any HPC system, check the software documents for details on how to use it effectively."
 ---
 
 On a high-performance computing system, no software is loaded by default.
 If we want to use a software package, we will need to "load" it ourselves.
-
->When you want to use any software that is installed on HPRC's clusters, first **_always_** check the software page
->at [hprc.tamu.edu](https://hprc.tamu.edu/wiki/SW)
 
 Before we start using individual software packages, however, 
 we should understand the reasoning behind this approach.
@@ -54,43 +50,42 @@ module avail
 ```
 {: .bash}
 ```
---------------------------- /usr/local/share/lmodfiles/MPI/intel/18.0/mvapich2/2.3 -----------------------------
-   darshan/3.1.6    gromacs/2018.2    netcdf/4.6.1    omb/5.4.3         scalapack/2.0.2
-   fftw3/3.3.8      hdf5/1.10.2       nwchem/6.8      parmetis/4.0.3    siesta-par/4.0.2
--------------------------------- /usr/local/share/lmodfiles/Compiler/intel/18.0 ---------------------------------
-   R/3.5.0                   libjpeg-turbo/1.5.3    mvapich2/2.3b                netcdf-serial/4.3.3.1
-   boost/1.67.0              metis/5.1.0            mvapich2/2.3rc1-gpu          netcdf-serial/4.6.1   (D)
-   cxx17/7.3.0        (L)    mkl/2018.0.3           mvapich2/2.3rc1              openmpi/1.10.5
-   hdf5-serial/1.8.17        mvapich2/2.2-debug     mvapich2/2.3rc2-gpu          openmpi/3.1.0-hpcx    (D)
-   hdf5-serial/1.10.2 (D)    mvapich2/2.2-gpu       mvapich2/2.3rc2              siesta/4.0.2
-   intelmpi/2018.0           mvapich2/2.2           mvapich2/2.3        (L,D)
-   intelmpi/2018.3    (D)    mvapich2/2.3b-gpu      ncarg/6.5.0
----------------------------------------- /usr/local/share/lmodfiles/Core ----------------------------------------
-   abaqus/6.14                   gnu/7.3.0                  (D)      qchem/5.1.1-openmp
-   abaqus/2016                   gnuplot/5.2.2                       qchem/5.1.1             (D)
-   abaqus/2017                   hadoop/3.0.0-alpha1                 qhull/2015.2
-   abaqus/2018            (D)    hisat2/2.1.0                        relion2/2.0
-   allinea/6.0.6                 homer/4.8                           remora/1.8.0
-   allinea/7.0            (D)    hpctoolkit/5.3.2                    rna-seqc/1.1.8
-   allinea/7.1                   htslib/1.6                          rstudio/1.0.136_server
-   ansys/17.2                    hyperworks/13                       rstudio/1.1.380_server  (D)
-   ansys/18.1                    hyperworks/2017.1          (D)      salmon/0.8.2
-   ansys/19.1             (D)    ime/1.1                             salome/8.2.0
-   arm-ddt/6.0.6                 intel/16.0.3                        sambamba/0.6.6
-   arm-ddt/7.0                   intel/16.0.8                        samtools/1.3.1          (D)
-   arm-ddt/7.1                   intel/17.0.2                        samtools/1.6
-   arm-ddt/18.2.1         (D)    intel/17.0.5                        samtools/1.9
-   arm-map/6.0.6                 intel/17.0.7                        schrodinger/15
-   arm-map/7.0                   intel/18.0.0                        schrodinger/16
-   arm-map/7.1                   intel/18.0.2                        schrodinger/2018.3      (D)
-   arm-map/18.2.1         (D)    intel/18.0.3               (L,D)    singularity/current
-   arm-pr/6.0.6                  java/1.7.0                          snpeff/4.2
-   arm-pr/7.0                    java/1.8.0_131             (D)      spark/rdma-0.9.4
+------------------------------------------------------------------------- Packages installed manually by HPRC staff -------------------------------------------------------------------------
+   ABAQUS/2016                                                   LIGGGHTS-WITH-BONDS/3.3.0          myPython/3.5.2-intel-2017A
+   ABAQUS/2017                                                   LS-DYNA/R8.1.0                     myPython/3.5.2-iomkl-2017A                        (D)
+   ABAQUS/2018                                            (D)    LS-DYNA/R9.1.0                     myR/3.3.2-iomkl-2017A-Python-2.7.12-default-mt
+   Anaconda-Jupyter/3-5.0.0.1                                    LS-DYNA/R9.2.0                     NAMD/2.12-icc-fftw-multicore-CUDA-hprc
+   Anaconda/2-4.3.1                                              LS-DYNA/R10.1.0                    NAMD/2.12-intel-2017A-hprc
+   Anaconda/2-5.0.1                                              LS-DYNA/R10.2.0             (D)    NAMD/2.12-iompi-2017A-fftw-hprc
+   Anaconda/3-4.2.0                                              LS-OPT/5.2.1-r107348               NAMD/2.12-multicore-CUDA
+   Anaconda/3-5.0.0.1                                     (D)    LS-OPT/5.2.1-r107511        (D)    NAMD/2.12-multicore
+   AnsysEM/19.1                                                  LS-PREPOST/4.5                     NAMD/2.12-TCP
+   AnsysEM/19.2                                           (D)    LS-PREPOST/4.6              (D)    NAMD/2.12-UDP                                     (D)
+   CESM/1.2.2-intel-2017A                                        LS-TASC/3.2-110810                 OpenMPI/99999999                                  (D)
+   ClusterFlow/0.5                                               LS-TASC/3.2-112069                 ORCA-HPRC-License/0
+   ConvergeCFD/2.3.6                                             LS-TASC/3.2-118423          (D)    Perl_tamu/5.24.0-GCCcore-6.3.0
+   curc-bench-terra/0                                            matcaffe/1.0-R2017a                PhyloNetworks/0.7.0-intel-2017A-Python-2.7.12
+   devel/0                                                       matcaffe/1.0-R2017b                Python/99999999                                   (D)
+
+   ... (too many modules) 
 
    D:        Default Module
 
-Use "module spider" to find all possible modules.
-Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
+     Use "module spider" to find all possible modules.
+     Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
+
+     ****************** TAMU HPRC USERS ******************
+
+     Please see our cluster user guides at:
+
+       https://hprc.tamu.edu/wiki/index.php/HPRC:Systems
+
+     Also, please see our currently defined toolchains at:
+
+       https://hprc.tamu.edu/wiki/index.php/SW:Toolchains
+
+     ****************** TAMU HPRC USERS ******************
+
 ```
 {: .output}
 
@@ -112,15 +107,15 @@ petlabs/bin)
 ```
 {: .output}
 
-We can load the `python/3.5` command with `module load`.
+We can load the `Python/3.7.0-intel-2018b` command with `module load`.
 
 ```
-module load python/3.5
+module load Python/3.7.0-intel-2018b
 which python3
 ```
 {: .bash}
 ```
-/usr/local/anaconda3/bin/python3
+/sw/eb/sw/Python/3.7.0-intel-2018b/bin/python3
 ```
 {: .output}
 
@@ -138,27 +133,25 @@ echo $PATH
 ```
 {: .bash}
 ```
-/usr/local/anaconda3/bin:/opt/mvapich2/intel/18.0/2.3/bin:/usr/local/gnu/7.3.0/bin:/opt/intel/itac/2018.3.022/bin:/opt/intel/advisor_2018/bin64:/opt/intel/vtune_amplifier_2018/bin64:/opt/intel/inspector_2018/bin64:/opt/intel/compilers_and_libraries_2018.3.222/linux/bin/intel64:/opt/torque/bin:/usr/lib64/qt3.3/bin:/opt/osc/bin:/opt/moab/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/ibutils/bin:/opt/ddn/ime/bin:/opt/puppetlab
-s/bin
+/sw/eb/sw/Python/3.7.0-intel-2018b/bin:/sw/eb/sw/XZ/5.2.4-GCCcore-7.3.0/bin:/sw/eb/sw/SQLite/3.24.0-GCCcore-7.3.0/bin:/sw/eb/sw/Tcl/8.6.8-GCCcore-7.3.0/bin:/sw/eb/sw/libreadline/7.0-GCCcore-7.3.0/bin:/sw/eb/sw/ncurses/6.1-GCCcore-7.3.0/bin:/sw/eb/sw/bzip2/1.0.6-GCCcore-7.3.0/bin:/sw/eb/sw/imkl/2018.3.222-iimpi-2018b/mkl/bin:/sw/eb/sw/imkl/2018.3.222-iimpi-2018b/bin:/sw/eb/sw/impi/2018.3.222-iccifort-2018.3.222-GCC-7.3.0-2.30/bin64:/sw/eb/sw/ifort/2018.3.222-GCC-7.3.0-2.30/compilers_and_libraries_2018.3.222/linux/bin/intel64:/sw/eb/sw/icc/2018.3.222-GCC-7.3.0-2.30/compilers_and_libraries_2018.3.222/linux/bin/intel64:/sw/eb/sw/binutils/2.30-GCCcore-7.3.0/bin:/sw/eb/sw/GCCcore/7.3.0/bin:/sw/local/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/usr/lpp/mmfs/bin:/home/pingluo/.local/bin:/home/pingluo/bin
 ```
 {: .output}
 
 You'll notice a similarity to the output of the `which` command. 
 In this case, there's only one difference:
-the `/usr/local/anaconda3/bin` directory at the beginning.
+the `/sw/eb/sw/Python/3.7.0-intel-2018b/bin` directory at the beginning.
 When we ran `module load python/3.5.2`, 
 it added this directory to the beginning of our `$PATH`.
 Let's examine what's there:
 
 ```
-ls /usr/local/anaconda3/bin
+ls /sw/eb/sw/Python/3.7.0-intel-2018b/bin
 ```
 {: .bash}
 ```
-2to3		  idle3    pip3.5    python3	       python3.5m-config  virtualenv
-2to3-3.5	  idle3.5  pydoc3    python3.5	       python3-config	  wheel
-easy_install	  pip	   pydoc3.5  python3.5-config  pyvenv
-easy_install-3.5  pip3	   python    python3.5m        pyvenv-3.5
+2to3        cygdb      easy_install      idle3    nosetests      pip     pydoc3    python3           python3.7m         pyvenv      tabulate
+2to3-3.7    cython     easy_install-3.7  idle3.7  nosetests-3.7  pip3    pydoc3.7  python3.7         python3.7m-config  pyvenv-3.7  virtualenv
+chardetect  cythonize  f2py              netaddr  pbr            pip3.7  python    python3.7-config  python3-config     runxlrd.py
 ```
 {: .output}
 
@@ -176,22 +169,28 @@ module list
 {: .bash}
 ```
 Currently Loaded Modules:
-  1) cxx17/7.3.0   2) intel/18.0.3   3) mvapich2/2.3   4) modules/au2018   5) python/3.5
-
-  
+Currently Loaded Modules:
+  1) GCCcore/7.3.0                        6) impi/2018.3.222-iccifort-2018.3.222-GCC-7.3.0-2.30  11) zlib/1.2.11-GCCcore-7.3.0      16) XZ/5.2.4-GCCcore-7.3.0
+  2) binutils/2.30-GCCcore-7.3.0          7) iimpi/2018b                                         12) ncurses/6.1-GCCcore-7.3.0      17) GMP/6.1.2-GCCcore-7.3.0
+  3) icc/2018.3.222-GCC-7.3.0-2.30        8) imkl/2018.3.222-iimpi-2018b                         13) libreadline/7.0-GCCcore-7.3.0  18) libffi/3.2.1-GCCcore-7.3.0
+  4) ifort/2018.3.222-GCC-7.3.0-2.30      9) intel/2018b                                         14) Tcl/8.6.8-GCCcore-7.3.0        19) Python/3.7.0-intel-2018b
+  5) iccifort/2018.3.222-GCC-7.3.0-2.30  10) bzip2/1.0.6-GCCcore-7.3.0                           15) SQLite/3.24.0-GCCcore-7.3.0 
 ```
 {: .output}
 
 
-
 ```
-module unload python/3.5
+module unload Python/3.7.0-intel-2018b
 module list
 ```
 {: .bash}
 ```
 Currently Loaded Modules:
-  1) cxx17/7.3.0   2) intel/18.0.3   3) mvapich2/2.3   4) modules/au2018
+  1) GCCcore/7.3.0                        6) impi/2018.3.222-iccifort-2018.3.222-GCC-7.3.0-2.30  11) zlib/1.2.11-GCCcore-7.3.0      16) XZ/5.2.4-GCCcore-7.3.0
+  2) binutils/2.30-GCCcore-7.3.0          7) iimpi/2018b                                         12) ncurses/6.1-GCCcore-7.3.0      17) GMP/6.1.2-GCCcore-7.3.0
+  3) icc/2018.3.222-GCC-7.3.0-2.30        8) imkl/2018.3.222-iimpi-2018b                         13) libreadline/7.0-GCCcore-7.3.0  18) libffi/3.2.1-GCCcore-7.3.0
+  4) ifort/2018.3.222-GCC-7.3.0-2.30      9) intel/2018b                                         14) Tcl/8.6.8-GCCcore-7.3.0
+  5) iccifort/2018.3.222-GCC-7.3.0-2.30  10) bzip2/1.0.6-GCCcore-7.3.0                           15) SQLite/3.24.0-GCCcore-7.3.0
 ```
 {: .output}
 
@@ -218,32 +217,24 @@ module avail
 ```
 {: .bash}
 ```
----------------------------------------- /usr/local/share/lmodfiles/Core ----------------------------------------
-   abaqus/6.14                   gnu/7.3.0                  (D)      qchem/5.1.1-openmp
-   abaqus/2016                   gnuplot/5.2.2                       qchem/5.1.1             (D)
-   abaqus/2017                   hadoop/3.0.0-alpha1                 qhull/2015.2
-   abaqus/2018            (D)    hisat2/2.1.0                        relion2/2.0
-   allinea/6.0.6                 homer/4.8                           remora/1.8.0
-   allinea/7.0            (D)    hpctoolkit/5.3.2                    rna-seqc/1.1.8
-   allinea/7.1                   htslib/1.6                          rstudio/1.0.136_server
-   ansys/17.2                    hyperworks/13                       rstudio/1.1.380_server  (D)
-   ansys/18.1                    hyperworks/2017.1          (D)      salmon/0.8.2
-   ansys/19.1             (D)    ime/1.1                             salome/8.2.0
-   arm-ddt/6.0.6                 intel/16.0.3                        sambamba/0.6.6
-   arm-ddt/7.0                   intel/16.0.8                        samtools/1.3.1          (D)
-   arm-ddt/7.1                   intel/17.0.2                        samtools/1.6
-   arm-ddt/18.2.1         (D)    intel/17.0.5                        samtools/1.9
-   arm-map/6.0.6                 intel/17.0.7                        schrodinger/15
-   arm-map/7.0                   intel/18.0.0                        schrodinger/16
-   arm-map/7.1                   intel/18.0.2                        schrodinger/2018.3      (D)
-   arm-map/18.2.1         (D)    intel/18.0.3               (L,D)    singularity/current
-   arm-pr/6.0.6                  java/1.7.0                          snpeff/4.2
-   arm-pr/7.0                    java/1.8.0_131             (D)      spark/rdma-0.9.4
+------------------------------------------------------------------------- Packages installed manually by HPRC staff -------------------------------------------------------------------------
+   ABAQUS/2016                                                   LIGGGHTS-WITH-BONDS/3.3.0          myPython/3.5.2-intel-2017A
+   ABAQUS/2017                                                   LS-DYNA/R8.1.0                     myPython/3.5.2-iomkl-2017A                        (D)
+   ABAQUS/2018                                            (D)    LS-DYNA/R9.1.0                     myR/3.3.2-iomkl-2017A-Python-2.7.12-default-mt
+   Anaconda-Jupyter/3-5.0.0.1                                    LS-DYNA/R9.2.0                     NAMD/2.12-icc-fftw-multicore-CUDA-hprc
+   Anaconda/2-4.3.1                                              LS-DYNA/R10.1.0                    NAMD/2.12-intel-2017A-hprc
+   Anaconda/2-5.0.1                                              LS-DYNA/R10.2.0             (D)    NAMD/2.12-iompi-2017A-fftw-hprc
+   Anaconda/3-4.2.0                                              LS-OPT/5.2.1-r107348               NAMD/2.12-multicore-CUDA
+   Anaconda/3-5.0.0.1                                     (D)    LS-OPT/5.2.1-r107511        (D)    NAMD/2.12-multicore
+   AnsysEM/19.1                                                  LS-PREPOST/4.5                     NAMD/2.12-TCP
+   AnsysEM/19.2                                           (D)    LS-PREPOST/4.6              (D)    NAMD/2.12-UDP                                     (D)
+   CESM/1.2.2-intel-2017A                                        LS-TASC/3.2-110810                 OpenMPI/99999999                                  (D)
+   ClusterFlow/0.5                                               LS-TASC/3.2-112069                 ORCA-HPRC-License/0
 ```
 {: .output}
 
 Software with multiple versions will be marked with a (D). The best way to be sure you understand how certain software is
-used on our clusters is to look at the software page on our website. [https://www.osc.edu/resources/available_software](https://www.osc.edu/resources/available_software)
+used on our clusters is to look at the software page on our website. [https://hprc.tamu.edu/wiki/SW](https://hprc.tamu.edu/wiki/SW).
 
 > ## Using software modules in scripts
 >
@@ -253,26 +244,10 @@ used on our clusters is to look at the software page on our website. [https://ww
 > (you should not assume a module loaded on the login node is loaded on a compute node).
 {: .challenge}
 
-> ## Loading a module by default
-> 
-> Adding a set of `module load` commands to all of your scripts and
-> having to manually load modules every time you log on can be tiresome.
-> Fortunately, there is a way of specifying a set of "default modules"
-> that always get loaded, regardless of whether or not you're logged on or running a job.
->
-> Every user has two hidden files in their home directory: `.bashrc` and `.bash_profile`
-> (you can see these files with `ls -la ~`).
-> These scripts are run every time you log on or run a job.
-> Adding a `module load` command to one of these shell scripts means that
-> that module will always be loaded.
-> Modify either your `.bashrc` or `.bash_profile` scripts to load a commonly used module like Python.
-> Does your `python3 --version` job from before still need `module load` to run?
-{: .challenge}
-
 ## Installing software of our own
 
 >The following tutorial is from our HOWTO guide on our website. We have many more useful guides there, take 
->a look at [https://www.osc.edu/resources/getting_started/howto](https://www.osc.edu/resources/getting_started/howto)
+>a look at [https://hprc.tamu.edu/wiki/SW](https://hprc.tamu.edu/wiki/SW).
 >
 {: .callout}
 
@@ -286,7 +261,7 @@ download the software, read the installation instructions (important!),
 install dependencies, compile, then start using our software.
 
 ### Getting Started
-Before installing your software, you should first prepare a place for it to live. We recommend the following directory structure, which you should create in the top-level of your home directory:
+Before installing your software, you should first prepare a place for it to live. We recommend the following directory structure, which you should create in the top-level of your scratch directory:
 
 ```
     local
@@ -296,7 +271,7 @@ Before installing your software, you should first prepare a place for it to live
 ```
 {: .bash}
 
-This structure is how OSC organizes the software we provide. Each directory serves a specific purpose:
+Each directory serves a specific purpose:
 
 | directory | description |
 | --- | --- |
@@ -306,12 +281,10 @@ This structure is how OSC organizes the software we provide. Each directory serv
 
 You can create this structure with one command.
 
-NOTE: Ensure $HOME is the full path of your home directory. You can identify this from the command line with the command echo $HOME.
-
 After navigating to where you want to create the directory structure, run:
 
 ```
-    mkdir -p $HOME/local/src $HOME/local/share/lmodfiles
+    mkdir -p $SCRATCH/local/src $SCRATCH/local/share/lmodfiles
 ```
 {: .bash}
 
@@ -319,10 +292,10 @@ After navigating to where you want to create the directory structure, run:
 ### Installing Software
 Now that you have your directory structure created, you can install your software. For demonstration purposes, we will install a local copy of Git.
 
-First, we need to get the source code onto the HPC filesystem. The easiest thing to do is find a download link, copy it, and use the wget tool to download it on the HPC. We'll download this into $HOME/local/src:
+First, we need to get the source code onto the HPC filesystem. The easiest thing to do is find a download link, copy it, and use the wget tool to download it on the HPC. We'll download this into $SCRATCH/local/src:
 
 ```
-    cd $HOME/local/src
+    cd $SCRATCH/local/src
     wget https://github.com/git/git/archive/v2.9.0.tar.gz
 ```
 {: .bash}
@@ -335,7 +308,7 @@ Now extract the tar file:
 ```
 {: .bash}
 
-Next, we'll go into the source directory and build the program. Consult your application's documentation to determine how to install into `$HOME/local/"software_name"/"version"`. Replace "software_name" with the software's name and "version" with the version you are installing, as demonstrated below. In this case, we'll use the configure tool's --prefix option to specify the install location.
+Next, we'll go into the source directory and build the program. Consult your application's documentation to determine how to install into `$SCRATCH/local/"software_name"/"version"`. Replace "software_name" with the software's name and "version" with the version you are installing, as demonstrated below. In this case, we'll use the configure tool's --prefix option to specify the install location.
 
 You'll also want to specify a few variables to help make your application more compatible with our systems. We recommend specifying that you wish to use the Intel compilers and that you want to link the Intel libraries statically. This will prevent you from having to have the Intel module loaded in order to use your program. To accomplish this, add `CC=icc CFLAGS=-static-intel` to the end of your invocation of configure. If your application does not use configure, you can generally still set these variables somewhere in its Makefile or build script.
 
@@ -344,11 +317,54 @@ Then, we can build Git using the following commands:
 ```
     cd git-2.9.0
     autoconf # this creates the configure file
-    ./configure --prefix=$HOME/local/git/2.9.0 CC=icc CFLAGS=-static-intel
+    ./configure --prefix=$SCRATCH/local/git/2.9.0 CC=icc CFLAGS=-static-intel
     make && make install
 ```
 {: .bash}
 
 We've successfully installed our first piece of software!
 
-See the HOWTO for details on creating your own modules for locally installed software.
+Now create a module file for your software 
+```
+cd $SCRATCH/local/share/lmodfiles
+mkdir git
+touch git/2.9.0.lua
+```
+{: .bash}
+Copy the following content to `git/2.9.0.lua`.
+```
+help([[
+This module loads the git software environment.
+]])
+
+whatis([[Description: git software environment]])
+
+local root = pathJoin(os.getenv("SCRATCH"),"/local/git/2.9.0")
+local bin = pathJoin(root, "/bin")
+
+if not isloaded("intel/2018b") then
+load("intel/2018b")
+end
+
+prepend_path("PATH", bin)
+```
+{: .output}
+
+Add your moduel path to the LMOD module search path.
+```
+module use "$SCRATCH/local/share/lmodfiles
+```
+{: .bash}
+
+Now you can load the module you just created and use git you just built.
+```
+module load git/2.9.0
+module list
+```
+{: .bash}
+```
+Currently Loaded Modules:
+  1) GCCcore/7.3.0                 3) icc/2018.3.222-GCC-7.3.0-2.30     5) iccifort/2018.3.222-GCC-7.3.0-2.30                   7) iimpi/2018b                   9) intel/2018b
+  2) binutils/2.30-GCCcore-7.3.0   4) ifort/2018.3.222-GCC-7.3.0-2.30   6) impi/2018.3.222-iccifort-2018.3.222-GCC-7.3.0-2.30   8) imkl/2018.3.222-iimpi-2018b  10) git/2.9.0
+```
+{: .output}
