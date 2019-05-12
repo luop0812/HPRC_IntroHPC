@@ -32,7 +32,7 @@ After that, we will show the comparison between Slurm and LSF so that you can le
 
 ## Running a batch job
 
-In section 2, we learned how to run a command next to the command line prompt. This is called to run a command interactively.
+In episode 2, we learned how to run a command next to the command line prompt. This is called to run a command interactively.
 The most basic use of the scheduler is to run a command non-interactively. 
 This is also referred to as batch job submission. 
 In this case, we need to make a script that incorporates some arguments for Slurm such as resources needed and modules to load. 
@@ -128,7 +128,7 @@ Other jobs on the node will be unaffected.
 This means that one user cannot mess up the experience of others,
 the only jobs affected by a mistake in scheduling will be their own.
 
-#### Node, CPU, Processor, Core
+#### Node, CPU, Processor, Core, task
 There are some terms we need to know to help us understand the parameters used in batch schedulerss.
 A node refers to a computer in the cluster (remember, a cluster consists of many computers). 
 CPU stands for Central Processing Unit. There are single core CPUs (which is rare nowadays) and multiple core CPUs. 
@@ -138,6 +138,8 @@ For example, each Terra node contains dual CPUs and each CPU contains 14 cores, 
 So each Terra node has total 28 cores, while each Ada node has total 20 cores. 
 
 But, sometimes, all three terms( CPU, processor, and core) mean a processor, especially in batch scheduler terminology.
+
+A task is an execution of a program of a serial of programs. A task can run on one or more cores. 
 
 ## Submitting Jobs via command line
 
@@ -166,8 +168,10 @@ JOBID        NAME                 USER             PARTITION    NODES  CPUS  STA
 
 We can see all the details of our job, most importantly if it is in "RUNNING" state.
 Sometimes our jobs might need to wait in a queue ("QUEUED") or have an error.
-The best way to check our job's status is with `squeue`. It is easiest to view just your own jobs
+It is easiest to view just your own jobs
 in the queue with the `squeue -u username`. Otherwise, you get all the jobs in the queues.
+
+we can also use `sstat jobid` to view job status. 
 
 ## Queues
 
@@ -186,7 +190,7 @@ Special queues include xlarge, gpu, and vnc etc. To use a special queue, you nee
 
 ## Job environment variables
 
-Slurm sets multiple environment variables at submission time. The following Slurm variables are commonly used in command files: 
+Slurm sets multiple environment variables at submission time. The following Slurm variables can be very usefule in batch job scripts: 
 
 
 | Variable Name |  Description | Example Values |
@@ -195,7 +199,28 @@ Slurm sets multiple environment variables at submission time. The following Slur
 | SLURM_JOB_NODELIST |  Contains a list of the nodes assigned to the job.  | tnxt-[0465-0466,0468-0469] |
 
 
+> ## Viewing job environment variables
+>
+> Submit a job and view the job id and its node list in the job.
+{: .challenge}
 
+## Other useful Slurm commands
+
+Sometimes we specify a too short walltime and the job will be killed before it is finished. We will lose all the intermediate work that has been done. 
+To prevent this from happening, we can increase the walltime to allow the job to finish. 
+
+```
+[pingluo@terra1 poisson]$ squeue -u pingluo
+JOBID        NAME                 USER                     PARTITION              NODES  CPUS  STATE        TIME         TIME_LEFT    START_TIME         REASON                   NODELIST
+2583522      poisson              pingluo                  short                  1      2     RUNNING      0:07         1:29:53      2019-05-11T23:48:2 None                     tnxt-0665
+
+[pingluo@terra1 poisson]$ scontrol update jobid=2583522 TimeLimi+=30
+
+[pingluo@terra1 poisson]$ squeue -u pingluo
+JOBID        NAME                 USER                     PARTITION              NODES  CPUS  STATE        TIME         TIME_LEFT    START_TIME         REASON                   NODELIST
+2583522      poisson              pingluo                  short                  1      2     RUNNING      1:55         1:58:05      2019-05-11T23:48:2 None                     tnxt-0665
+
+```
 
 Sometimes we'll make a mistake and need to cancel a job.
 This can be done with the `cancel` command.
@@ -224,6 +249,18 @@ Absence of any job info indicates that the job has been successfully canceled.
 [username@terra2 ~]$ 
 ```
 
+When a job is done, information about the job will be stored in either log files or a database. The information can be retrieved with `sacct`.
+
+```
+[username@terra1 poisson]$ sacct -j 2583373 --format="JobID,User,NCPUS,NNodes,Elapsed,ReqMem,MaxRss"
+       JobID      User      NCPUS   NNodes    Elapsed     ReqMem     MaxRSS
+------------ --------- ---------- -------- ---------- ---------- ----------
+2583373        pingluo          4        1   00:02:28     2.50Gn
+2583373.bat+                    4        1   00:02:28     2.50Gn      1048K
+2583373.ext+                    4        1   00:02:28     2.50Gn       980K
+2583373.0                       1        1   00:02:22     2.50Gn     57560K
+```
+
 ## Comparison between Slurm and LSF
 
 ### Job Specifications
@@ -235,7 +272,7 @@ Absence of any job info indicates that the job has been successfully canceled.
 | node count | -N,--nodes=<minnodes[-maxnodes]> | N/A |
 | core count | -n, --ntasks=<count> | -n <count> |
 | tasks per node | --ntasks-per-node=<count> | -R "span[ptile=count]" |
-| wall clock limit | -t, --time=<days-hh:mm:ss> or <hh:mm:ss> | -W [hh:mm] |
+| wall clock limit | -t, --time=<days-hh:mm:ss> or <hh:mm:ss> | -W <hh:mm> |
 | memory per core |  --mem-per-cpu=<size[units]> (unit is M/G/T) | -M <size> -R "rusage[mem=size]" | 
 | memory per node | N/A |  --mem=<size[units]> |
 | queue | -p, --partition=<queuename> | -q <queuename> |
@@ -247,8 +284,10 @@ Absence of any job info indicates that the job has been successfully canceled.
 | Operation | Slurm  |  LSF |
 |---|---|---|
 | submit a job |  sbatch jobfile | bsub < jobfile |
-| check job status | squeue [-u username] | bjobs jobid |
+| check job status | squeue [-u username] or sstat jobid | bjobs jobid |
 | cancel a job | scancel jobid | bkill jobid |
+| change job walltime | scontrol update jobid=<jobid> TimeLimit=<[days-]hours:minutes:seconds> | bmod -W [hour:]minute |
+| check job history/accounting info| sacct --format=<format> -j [jobid] | bhist -n <days> | 
 
 
 
@@ -270,8 +309,6 @@ You can find out more information about these parameters by viewing the manual p
 >
 > For more information about LSF, check [LSF documentation](https://www.ibm.com/support/knowledgecenter/en/SSETD4_9.1.3/lsf_welcome.html).
 {: .callout}
-
-## Canceling a job
 
 ```
 username@terra2 ~]$ man sbatch

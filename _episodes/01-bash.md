@@ -83,19 +83,17 @@ with no client software to install and configure.
 
 ### Logging on to OnDemand
 
-Open a new browser window and go to [https://portal.hprc.tamu.edu](https://portal.hprc.tamu.edu). This is the homepage for the Ada and the Terra OnDemand portal. 
+Open a new browser window and go to [https://portal.hprc.tamu.edu](https://portal.hprc.tamu.edu).
+Type in your NetID and password. If you have a valid account on Ada/Terra, you will be able to log into the homepage of the TAMU HPRC Portal.
+Now you can click 'Ada OnDemand Portal' or 'Terra OnDemand Portal' to get into a cluster OnDemand portal.
 
-The rest of the exercises we'll work on today will be with Ada or Terra OnDemand.
+The rest of the exercises we'll work on today will be with Ada or Terra portal, and mostly on the Terra portal.
 
 >You can check our [user guide](https://hprc.tamu.edu/wiki/SW:Portal) for more information.
 {: .callout}
 
-Ada/Terra OnDemand uses TAMU CAS for authtication. Click [Terra OnDemand Portal](https://portal-terra.hprc.tamu.edu), and type in your NetID and password. 
-Once you are logged in, you'll see the dashboard. At the top are the pulldown menus we'll use to access the clusters.
-
 ![OnDemand Dashboard](../files/Pulldown.png)      
 
-As you are logging in to Terra, you can log in to Ada without further authentication due to the single-sign-on feature of CAS. 
 
 We'll open a shell tab under 'Clusters', select 'Terra shell access'.
 
