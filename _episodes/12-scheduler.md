@@ -287,7 +287,7 @@ When a job is done, information about the job will be stored in either log files
 | check job status | squeue [-u username] or sstat jobid | bjobs jobid |
 | cancel a job | scancel jobid | bkill jobid |
 | change job walltime | scontrol update jobid=<jobid> TimeLimit=<[days-]hours:minutes:seconds> | bmod -W [hour:]minute |
-| check job history/accounting info| sacct --format=<format> -j [jobid] | bhist -n <days> | 
+| check job history/accounting info| sacct \-\-format=\<format\> -j [jobid] | bhist -n <days> | 
 
 
 
