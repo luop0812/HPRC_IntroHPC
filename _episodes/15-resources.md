@@ -1,7 +1,7 @@
 ---
 title: "Using a cluster: Using resources effectively"
 teaching: 15
-exercises:10 
+exercises: 15 
 questions:
 - "How do we monitor our jobs?"
 - "How can I get my jobs scheduled more easily?" 
@@ -60,7 +60,8 @@ This value is typically two to three times what you think your job will need.
 > BEGIN
 > ```
 > {: .bash}
-> 
+>    
+>    
 > Let's request for 4 cores, 10G memory per node, and 1 hour walltime 
 > You'll need to figure out a good amount of resources to ask for for this first "test run".
 {: .challenge}
@@ -68,7 +69,8 @@ This value is typically two to three times what you think your job will need.
 Once the job completes, we can check resources used. 
 
 > ## Checking resources used
-> With Slurm, we use sacct to check the actual walltime and memory spent by a finished job. 
+> With Slurm, we use `sacct` to check the actual walltime and memory spent by a finished job. 
+>
 > ```
 > [username@terra1 poisson]$ sacct -j  2583373 --format="JobID,Elapsed,MaxRSS"
 >       JobID    Elapsed     MaxRSS
@@ -80,13 +82,14 @@ Once the job completes, we can check resources used.
 > 
 > ```
 > {: .bash}
-> For sure we have requested way too much memory and walltime. Now modify the job script and reduce the resources to at most three times what we have got from the test.
+>
+> It took two and half minutes and 57M memor to finish our job. For sure we have requested way too much memory and walltime. Now modify the job script and reduce the resources to at most three times what we have got from the test.
 >
 > LSF will write the actually walltime and memory used in the job standard output file. Checking the end of that file you will find out how much memory and wall time were actually used.
-> Successfully completed.
+> 
 > ```
 > Resource usage summary:
-
+> 
 >     CPU time :                                   670.12 sec.
 >     Max Memory :                                 33 MB
 >     Average Memory :                             31.76 MB
@@ -97,6 +100,7 @@ Once the job completes, we can check resources used.
 >     Max Threads :                                11
 > 
 > The output (if any) is above this job summary.
+> 
 > ```
 > {:.bash}
 {: .challenge}
@@ -117,8 +121,8 @@ So here are a couple final words to live by:
 
 * Don't run jobs on the login node, though quick tests are generally fine. 
   A "quick test" is generally anything that uses less than 1GB of memory, and 20 minutes of time.
-  Anything larger will be automatically killed by the system. Remember, the login node is to 
-  be shared with other users. 
+  Anything longer that 60 minutes will be killed by the system. Remember, the login node is to 
+  be shared with other users for compiling and testing codes and transfering files. 
 
 * Compress files before transferring to save file transfer times with large datasets.
 
@@ -131,8 +135,8 @@ So here are a couple final words to live by:
 * The less resources you ask for, the faster your jobs will find a slot in which to run.
   The more accurate your walltime is, the sooner your job will run.
 
-* You can generally install software yourself, but if you want a shared installation of some kind,
-  it might be a good idea to email OSCHelp@osc.edu.
+* You can generally install software yourself in your scratch directory, but if you want a shared installation of some kind,
+  it might be a good idea to email help@hprc.tamu.edu.
 
 * Always use the default compilers if possible. Newer compilers are great, but older stuff generally
   means that your software will still work, even if a newer compiler is loaded.
