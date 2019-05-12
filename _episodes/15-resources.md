@@ -35,6 +35,7 @@ The current utilization of each cluster can be found at HPRC [homepage](hprc.tam
 ![Current cluster utilization](../files/ClusterStatus.png)
 
 We can also check the historical status within a period of time by clicking ['Historical Status'](https://hprc.tamu.edu/stats/history.html)
+
 ## Estimating required resources using the scheduler
 
 Although we covered requesting resources from the scheduler earlier,
@@ -86,7 +87,7 @@ Once the job completes, we can check resources used.
 > Successfully completed.
 > ```
 > Resource usage summary:
-
+> 
 >     CPU time :                                   670.12 sec.
 >     Max Memory :                                 33 MB
 >     Average Memory :                             31.76 MB
