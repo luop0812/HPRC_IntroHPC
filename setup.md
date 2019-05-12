@@ -6,7 +6,7 @@ permalink: /setup/
 
 ## Files for Workshop
 
-[Click here](../data/osc_intro_hpc.zip) to download files needed for this workshop.
+[Click here](../data/intro_hpc.zip) to download files needed for this workshop.
 
 ## HPC Access
 

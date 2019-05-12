@@ -179,13 +179,13 @@ cluster by dragging and dropping or using the upload and download buttons.
 
 > ## Transfer files to the cluster
 > We want to put the job script files on your home directory using the OnDemand file browser. You can get these files in the 
-> setup page of this workshop. Make sure to unzip them, there should be two files `sleep.sh` and `bowtie.sh`.
+> setup page of this workshop. Make sure to unzip them, there should be two files `sleep.sh` and `poisson.sh`.
 > 
 > Open your Home Directory in the OnDemand file browser. 
 >
-> Make a new directory called `sleep` and another called `genome`.
+> Make a new directory called `sleep` and another called `poisson`.
 >
-> Put the `sleep.sh` file in the `sleep` directory and the `bowtie.sh` file in the `genome` directory. You can do 
+> Put the `sleep.sh` file in the `sleep` directory and the `poisson.sh` file in the `poisson` directory. You can do 
 > this with the upload button or just drag and drop the files into the browser.
 >
 > *NB: Always name directories and files with no spaces! Otherwise, Linux may not interpret this as one object.*
@@ -199,15 +199,9 @@ the absolute best tool is `wget`.
 The syntax is relatively straightforward: `wget https://some_url/file.tar.gz`
 
 > ## Downloading the Drosophila genome
-> The *Drosophila melanogaster* reference genome is located at the following website:
-> [http://metazoa.ensembl.org/Drosophila_melanogaster/Info/Index](http://metazoa.ensembl.org/Drosophila_melanogaster/Info/Index).
+> Download the executable for poisson.sh from [https://github.com/luop0812/HPRC_IntroHPC/blob/master/poisson-mpi.exe.tgz](https://github.com/luop0812/HPRC_IntroHPC/blob/master/poisson-mpi.exe.tgz)
 > Download it to the cluster with `wget`.
 >
-> Some additional details:
->
-> * You want to go get the genome through the "Download DNA Sequence" link
-> * We are interested in the `Drosophila_melanogaster.BDGP6.dna.toplevel.fa.gz` file.
-> * Once you find the file, copy link location
 {: .challenge}
 
 > ## Working with compressed files, using unzip and gunzip
@@ -218,6 +212,7 @@ The syntax is relatively straightforward: `wget https://some_url/file.tar.gz`
 >
 >File decompression reference:
 >
+>* **.tgz** - `tar -xzvf archive-name.tar.gz`
 >* **.tar.gz** - `tar -xzvf archive-name.tar.gz`
 >* **.tar.bz2** - `tar -xjvf archive-name.tar.bz2`
 >* **.zip** - `unzip archive-name.zip`

@@ -88,7 +88,7 @@ Once the job completes, we can check resources used.
 > ```
 > {: .bash}
 >
-> It took two and half minutes and 57M memor to finish our job. For sure we have requested way too much memory and walltime. Now modify the job script and reduce the resources to at most three times what we have got from the test.
+> It took two and half minutes and 57M memory to finish our job. For sure we have requested way too much memory and walltime. Now modify the job script and reduce the resources to at most three times what we have got from the test.
 >
 > LSF will write the actually walltime and memory used in the job standard output file. Checking the end of that file you will find out how much memory and wall time were actually used.
 > 
