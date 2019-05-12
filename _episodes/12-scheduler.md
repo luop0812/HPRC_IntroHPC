@@ -74,11 +74,11 @@ In our example, we have set the following job parameters:
  
 | Flag | Name | Example Setting | Notes|
 | --- | --- | --- | --- |
-| --job-name | jobname| test_script | Name of your script (no spaces, alphanumeric only) |
-| --time | walltime | 00:03:00 | set the job total walltime to three minutes. |
-| --ntasks | number of tasks| 1 | set number of tasks (or cores) for the job. |
-| --mem| memory per node | 2560M | set total memory per node. |
-| --output | job output file name| test.out | set the name of the output file |
+| \-\-job-name | jobname| test_script | Name of your script (no spaces, alphanumeric only) |
+| \-\-time | walltime | 00:03:00 | set the job total walltime to three minutes. |
+| \-\-ntasks | number of tasks| 1 | set number of tasks (or cores) for the job. |
+| \-\-mem| memory per node | 2560M | set total memory per node. |
+| \-\-output | job output file name| test.out | set the name of the output file |
 
 #### Walltime
 Walltime is represented by `walltime=00:03:00` in the format HH:MM:SS. This will be how long the job will run before timing out.  If your job exceeds this time the scheduler will terminate the job. It is recommended to find a usual runtime for the job and add some more (say 20%) to it. For example, if a job took approximately 10 hours, the walltime limit could be set to 12 hours, e.g. "-l walltime=12:00:00". By setting the walltime the scheduler can perform job scheduling more efficiently and also reduces occasions where errors can leave the job stalled but still taking up resource for the default much longer walltime limit.
@@ -269,13 +269,13 @@ When a job is done, information about the job will be stored in either log files
 | Option | Slurm  |  LSF |
 |---|---|---|
 | Directive | #SBATCH | #BSUB |
-| node count | -N,--nodes=<minnodes[-maxnodes]> | N/A |
-| core count | -n, --ntasks=<count> | -n <count> |
-| tasks per node | --ntasks-per-node=<count> | -R "span[ptile=count]" |
-| wall clock limit | -t, --time=<days-hh:mm:ss> or <hh:mm:ss> | -W <hh:mm> |
-| memory per core |  --mem-per-cpu=<size[units]> (unit is M/G/T) | -M <size> -R "rusage[mem=size]" | 
-| memory per node | N/A |  --mem=<size[units]> |
-| queue | -p, --partition=<queuename> | -q <queuename> |
+| node count | -N,\-\-nodes=<minnodes[-maxnodes]> | N/A |
+| core count | -n, \-\-ntasks=<count> | -n <count> |
+| tasks per node | \-\-ntasks-per-node=<count> | -R "span[ptile=count]" |
+| wall clock limit | -t, \-\-time=<days-hh:mm:ss> or <hh:mm:ss> | -W <hh:mm> |
+| memory per core |  \-\-mem-per-cpu=<size[units]> (unit is M/G/T) | -M <size> -R "rusage[mem=size]" | 
+| memory per node | N/A |  \-\-mem=<size[units]> |
+| queue | -p, \-\-partition=<queuename> | -q <queuename> |
 
 
 ### User Commands
