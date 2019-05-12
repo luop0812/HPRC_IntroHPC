@@ -1,11 +1,7 @@
 ---
 title: "Using a cluster: Using resources effectively"
 teaching: 15
-<<<<<<< HEAD
 exercises: 15 
-=======
-exercises: 10 
->>>>>>> 269e486458eefee3cf194e4e3850550eb6d0f1f8
 questions:
 - "How do we monitor our jobs?"
 - "How can I get my jobs scheduled more easily?" 
