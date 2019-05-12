@@ -16,8 +16,8 @@ keypoints:
 On a high-performance computing system, no software is loaded by default.
 If we want to use a software package, we will need to "load" it ourselves.
 
->When you want to use any software that is installed on OSC's clusters, first **_always_** check the software page
->at [osc.edu](https://www.osc.edu/resources/available_software)
+>When you want to use any software that is installed on HPRC's clusters, first **_always_** check the software page
+>at [hprc.tamu.edu](https://hprc.tamu.edu/wiki/SW)
 
 Before we start using individual software packages, however, 
 we should understand the reasoning behind this approach.

@@ -27,7 +27,7 @@ and are used to accomplish tasks that might otherwise be too substantial for any
 
 ![The cloud is made of Linux](../files/linux-cloud.jpg)
 
-## High performance computing
+## High performance computing cluster
 
 A high-performance computing cluster is a set of machines that have been 
 designed to handle tasks that normal computers can't handle.

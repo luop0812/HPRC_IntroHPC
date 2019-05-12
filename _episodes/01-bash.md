@@ -16,11 +16,10 @@ keypoints:
 
 ## Opening a Terminal
 
-Connecting to an HPC system is most often done with a program known as "SSH" (**S**ecure **SH**ell) which is accessed through a Terminal. Linux and Mac users will find a Terminal program already installed on their computers.  Windows PC users will need to install a Terminal emulator, I suggest using PuTTY. If you haven't done so, please download the appropriate version for your [32bit](https://the.earth.li/~sgtatham/putty/latest/w32/putty.exe) or [64bit](https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe) OS.
-
-> ## 32 bit or 64 bit OS?
-> Visit this [website](https://support.wdc.com/knowledgebase/answer.aspx?ID=9405) for instructions on determining if your Windows 7,8 or 10 is 32 or 64 bit.
-{: .callout}
+Connecting to an HPC system is most often done with a program known as "SSH" (**S**ecure **SH**ell) 
+which is accessed through a Terminal. Linux and Mac users will find a Terminal program already installed on their computers.  
+Windows PC users will need to install a Terminal emulator, I suggest using [PuTTY](https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe) 
+or [MobaXterm](https://mobaxterm.mobatek.net/download.html). 
 
 ## Connecting with SSH
 

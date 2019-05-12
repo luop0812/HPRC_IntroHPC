@@ -1,7 +1,7 @@
 ---
 title: "Using a cluster: Using resources effectively"
 teaching: 15
-exercises: 15
+exercises:10 
 questions:
 - "How do we monitor our jobs?"
 - "How can I get my jobs scheduled more easily?" 
@@ -23,24 +23,18 @@ What we need to do now is use the systems effectively.
 
 ## How do you choose which cluster to use?
 
-At OSC, we have three clusters: Owens, Pitzer, and Ruby. Most users will not have access to Ruby so we will not cover it
-here. But what are the differences between Owens and Pitzer and how do you decide which one to use? Luckily, 
-you can switch between them pretty easily so you don't have to commit to one forever. Often it is a question of how 
-busy they are.
+At HPRC, we have four clusters: Ada, Terra, Curie, and Lonestar. Ada, Terra, Curie are the two clusters operated by us and Lonestar
+is operated by TACC. Most of our users use Ada and/or Terra. But what are the differences between Ada and Terra, and how do you decide which one to use?  
+Ada is larger but older, while Terra is smaller but newer. Ada has 20 cores per node and Terra has 28 cores per node. Ada uses LSF batch scheduler, while Terra uses Slurm. 
+Otherwise, the two systems are similar.  
+You can switch between them pretty easily so you don't have to commit to one forever. 
+Often it is a question of how busy they are. 
+To switch between Ada and Terra, one thing you need to do is to convert your batch script. You may also need to recompile your program if your use your own code.  
 
-OnDemand has a tool to show you how active the clusters are so you can decide where to submit your job. It is in the
-Clusters menu, called System Status. If you select Owens and the week long view, you'll see something like this:
+The current utilization of each cluster can be found at HPRC [homepage](hprc.tamu.edu):
+![Current cluster utilization](../files/ClusterStatus.png)
 
-![Owens Node Usage Last Week](../files/Owens-queue-week.png)
-
-Compre this to Pitzer activity:
-
-![Pitzer Node Usage Last Week](../files/Pitzer-queue-week.png)
-
-Right now, Pitzer seems the better choice.
-
-For the standard compute nodes the main difference in **Owens has 28 cores per node** and _Pitzer has 40 cores per node_.
-
+We can also check the historical status within a period of time by clicking ['Historical Status'](https://hprc.tamu.edu/stats/history.html)
 ## Estimating required resources using the scheduler
 
 Although we covered requesting resources from the scheduler earlier,
@@ -56,112 +50,63 @@ and then ask the scheduler how many resources it used.
 A good rule of thumb is to ask the scheduler for more time and memory than your job can use.
 This value is typically two to three times what you think your job will need.
 
-> ## Benchmarking `bowtie2-build`
+> ## Benchmarking `poisson-mpi.exe`
 > Create a job that runs the following command 
-> in the same directory as our *Drosophila* reference genome
-> from earlier.
-> 
 > ```
-> bowtie2-build Drosophila_melanogaster.BDGP6.dna.toplevel.fa dmel-index
+> module load intel/2018b
+> mpirun ./poisson-mpi.exe <<BEGIN
+> 800
+> 10000000
+> BEGIN
 > ```
 > {: .bash}
 > 
-> The `bowtie2-build` command is provided by the `bowtie2` module.
-> As a reference, this command could use several gigabytes of memory and up to an hour of compute time, 
-> but only 1 cpu in any scenario.
-> 
+> Let's request for 4 cores, 10G memory per node, and 1 hour walltime 
 > You'll need to figure out a good amount of resources to ask for for this first "test run".
-> You might also want to have the scheduler email you to tell you when the job is done.
 {: .challenge}
 
-Once the job completes, we can look at the logfile for a statement of resources used. It will look like this
+Once the job completes, we can check resources used. 
 
-```
------------------------
-Resources requested:
-nodes=2:ppn=28
------------------------
-Resources used:
-cput=125:18:32
-walltime=02:14:32
-mem=34.824GB
-vmem=77.969GB
------------------------
-Resource units charged (estimate):
-12.556 RUs
------------------------
-```
-{: .bash}
+> ## Checking resources used
+> With Slurm, we use sacct to check the actual walltime and memory spent by a finished job. 
+> ```
+> [username@terra1 poisson]$ sacct -j  2583373 --format="JobID,Elapsed,MaxRSS"
+>       JobID    Elapsed     MaxRSS
+> ------------ ---------- ----------
+> 2583373        00:02:28
+> 2583373.bat+   00:02:28      1048K
+> 2583373.ext+   00:02:28       980K
+> 2583373.0      00:02:22     57560K
+> 
+> ```
+> {: .bash}
+> For sure we have requested way too much memory and walltime. Now modify the job script and reduce the resources to at most three times what we have got from the test.
+>
+> LSF will write the actually walltime and memory used in the job standard output file. Checking the end of that file you will find out how much memory and wall time were actually used.
+> Successfully completed.
+> ```
+> Resource usage summary:
 
+>     CPU time :                                   670.12 sec.
+>     Max Memory :                                 33 MB
+>     Average Memory :                             31.76 MB
+>     Total Requested Memory :                     4000.00 MB
+>     Delta Memory :                               3967.00 MB
+>     Max Swap :                                   1 MB
+>     Max Processes :                              10
+>     Max Threads :                                11
+> 
+> The output (if any) is above this job summary.
+> ```
+> {:.bash}
+{: .challenge}
 
-
-* **Resources Requested** - What did you request?
-* **cput** - What is the total CPU time used?
-* **Walltime** - How long did the job take?
-* **Memory** - Amount of RAM used.
-* **Virtual Memory** - Amount of total temporary memory used.
-* **Resource Units** - RUs charged against your project for this job.
 
 ## Do not run jobs on the login nodes
 
 The example above was a small process that can be run on the login node without too much disruption. However, it
-is good practice to avoid running anything resource intensive on the login nodes. There is a hard limit of 1GB RAM and 
-20 minutes, anything larger will be automatically stopped.
-
-Here is an example of a job script that would run the process above on a compute node and copy the results back.
-
-```
-#PBS -N bowtie-dros
-#PBS -l walltime=01:00:00
-#PBS -l nodes=1:ppn=28
-#PBS -A PZSXXXX
-#PBS -j oe
-
-set echo
-module load bowtie2
-cd $PBS_O_WORKDIR
-cp Drosophila_melanogaster.BDGP6.dna.toplevel.fa $TMPDIR
-cd $TMPDIR
-bowtie2-build Drosophila_melanogaster.BDGP6.dna.toplevel.fa dros-index
-cp *.* $PBS_O_WORKDIR
-
-```
-{: bash}
-
-This job requests a full node on Owens, which is not needed for this calculation, but if you are unsure about how much 
-memory or how many processors your job will require, it is okay to request more than you need. As you run jobs, 
-you will get more comfortable identifying the amount of resources you need.
-
-```
-cd $PBS_O_WORKDIR
-```
-{: bash}
-This line ensures we are in the correct starting directory, where the input files are located. If your input files
-are not in same directory as your job script, you can specify a different location. 
-
-```
-cp Drosophila_melanogaster.BDGP6.dna.toplevel.fa $TMPDIR
-```
-{: bash}
-
-Now, we can copy the input file to the compute node, known as `$TMPDIR` until the job is assigned to a node. 
-
-```
-cd $TMPDIR
-bowtie2-build Drosophila_melanogaster.BDGP6.dna.toplevel.fa dros-index
-cp *.* $PBS_O_WORKDIR
-```
-{: bash}
-
-Finally, we move the job to the compute node and run the software. All the files will be read and written on
-the compute node. This makes your job run faster and keeps the job traffic from impacting the network. In the final
-line, we copy back any output files. I used a very general wildcard to copy everything back, but you can be more
-specific, based on your job.
-
-A note about memory: Memory (RAM) is allocated based on number of processors requested per node. For example, if you
-request 14 ppn on Owens, that is half the available processors so your job will receive half the available memory (~64GB).
-This applies to Oakley, Owens, and Pitzer. On Ruby, you cannot request less than a whole node, so there is no need to 
-request memory at all.
+is good practice to avoid running anything resource intensive on the login nodes. There is a hard limit 
+60 minutes, anything longer will be automatically stopped.
 
 ## Playing nice in the sandbox
 
