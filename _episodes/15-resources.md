@@ -1,7 +1,11 @@
 ---
 title: "Using a cluster: Using resources effectively"
 teaching: 15
+<<<<<<< HEAD
 exercises: 15 
+=======
+exercises: 10 
+>>>>>>> 269e486458eefee3cf194e4e3850550eb6d0f1f8
 questions:
 - "How do we monitor our jobs?"
 - "How can I get my jobs scheduled more easily?" 
@@ -35,6 +39,7 @@ The current utilization of each cluster can be found at HPRC [homepage](hprc.tam
 ![Current cluster utilization](../files/ClusterStatus.png)
 
 We can also check the historical status within a period of time by clicking ['Historical Status'](https://hprc.tamu.edu/stats/history.html)
+
 ## Estimating required resources using the scheduler
 
 Although we covered requesting resources from the scheduler earlier,
