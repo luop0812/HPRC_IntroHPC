@@ -333,6 +333,7 @@ When a job is done, information about the job will be stored in either log files
 
 
 You can find out more information about these parameters by viewing the manual page of `sbatch` on Terra and `bsub` on Ada. 
+```
 username@terra2 ~]$ man sbatch
 ```
 {: .bash}
@@ -350,7 +351,6 @@ username@ada1 ~]$ man bsub
 > For more information about LSF, check [LSF documentation](https://www.ibm.com/support/knowledgecenter/en/SSETD4_9.1.3/lsf_welcome.html).
 {: .callout}
 
-```
 ## Submit Jobs with Job Composer on OnDemand
 
 OnDemand also has a tool for job creation and submission to the batch system. The same information as above applies since
