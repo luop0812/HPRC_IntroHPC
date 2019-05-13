@@ -94,7 +94,6 @@ Once the job completes, we can check resources used.
 {: .challenge}
 
 LSF will write the actually walltime and memory used to the job standard output file. Checking the end of that file you will find out how much memory and wall time were actually used.
-You can use `bhist -l job_id` to view the job resource usage received from LSF log files. 
  
 ```
 Resource usage summary:
@@ -112,6 +111,7 @@ The output (if any) is above this job summary.
 ```
 {: .output}
 
+You can use `bhist -l job_id` to view the job resource usage received from LSF log files. 
 
 ## Do not run jobs on the login nodes
 
