@@ -189,9 +189,9 @@ cluster by dragging and dropping or using the upload and download buttons.
 > We want to put the job script files on your home directory using the OnDemand file browser. You can get these files in the 
 > setup page of this workshop. Make sure to unzip them, there should be two files `sleep.sh` and `poisson.sh`.
 > 
-> Open your Home Directory in the OnDemand file browser. 
+> Open your scratch Directory in the OnDemand file browser. 
 >
-> Make a new directory called `sleep` and another called `poisson`.
+> Make a new directory called `IntroHPC`. Inside the directory `IntroHPC`, make a new directory `sleep` and another called `poisson`.
 >
 > Put the `sleep.sh` file in the `sleep` directory and the `poisson.sh` file in the `poisson` directory. You can do 
 > this with the upload button or just drag and drop the files into the browser.

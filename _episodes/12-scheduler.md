@@ -378,9 +378,29 @@ Active Jobs. You can filter by your jobs, your group's jobs, and all jobs.
 >
 > Find  job in the templates
 >
-> Edit the job script to correct the project number
->
->Submit job and view results
+> Submit job and view results
 {: .challenge}
 
+## Running Remote Visualization Jobs
+Applications such as Abaqus, Ansys, and Comsol provide users with a nice OpenGL graphic interface. If we want to use the graphic interface with these type of applications, we need to follow some steps using our in-house Bash scripts, as shown in this user guide [https://hprc.tamu.edu/wiki/Terra:Remote-Viz](https://hprc.tamu.edu/wiki/Terra:Remote-Viz). 
 
+Open OnDemand makes it extreamly easy to run such application with just a few clicks. 
+
+![Abaqus](../files/Abaqus.png)
+
+
+
+## Running Web Server Applications
+It is easy to run web server applications using Open OnDemand, such as Jupyter Notebook and Rstudio.
+
+> ## Submit a Jupyter Notebook job using the OnDemand portal
+> Open a shell using the portal
+> 
+> Run `wget` to get a python notebook file from `https://github.com/luop0812/HPRC_IntroHPC/blob/master/JupyterNotebook.tgz`
+>
+> Unpack the file with `tar xzvf JupyterNotebook.tgz`
+>
+> Find Jupyter Notebook App from the pull down menu. 
+>
+> Submit Jupyter Notebook. When it starts, navigate to JupyterNotebook and view the notebook you just downloaded.
+{: .challenge}
