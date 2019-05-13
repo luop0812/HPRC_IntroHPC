@@ -118,6 +118,7 @@ We'll open a shell tab under 'Clusters', select 'Terra shell access'.
 > ```
 > PS1='[\u@terra2 \W]\$ '
 > ```
+> {: .bash}
 >
 > Make sure you can copy and paste this command into the shell tab, that will make the rest of this workshop much easier.
 >
