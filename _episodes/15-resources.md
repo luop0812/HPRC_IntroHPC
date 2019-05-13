@@ -111,7 +111,7 @@ The output (if any) is above this job summary.
 ```
 {: .output}
 
-You can use `bhist -l job_id` to view the job resource usage received from LSF log files. 
+You can use `bhist -l job_id` to view the job resource usage retrieved from LSF log files. 
 
 ## Do not run jobs on the login nodes
 
