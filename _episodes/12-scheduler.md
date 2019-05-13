@@ -399,7 +399,7 @@ It is easy to run web server applications using Open OnDemand, such as Jupyter N
 >
 > Unpack the file with `tar xzvf JupyterNotebook.tgz`
 >
-> Find 'Jupyter Notebook' from the pulldown menu for Interactive Apps from the portal. 
+> Find 'Jupyter Notebook' from the pulldown menu for Interactive Apps in the portal. 
 >
 > Submit Jupyter Notebook. When it starts, navigate to JupyterNotebook and view the notebook you just downloaded.
 {: .challenge}
