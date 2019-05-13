@@ -258,6 +258,7 @@ Submitted batch job 2554410
 [username@terra2 ~]$ squeue -u username
 ```
 {: .bash}
+```
 JOBID        NAME                 USER             PARTITION    NODES  CPUS  STATE        TIME         TIME_LEFT    START_TIME         REASON                   NODELIST
 2554410      test_script          username         short        1      1     RUNNING      0:38         0:22         2019-05-09T00:26:5 None                     tnxt-0715
 ```
