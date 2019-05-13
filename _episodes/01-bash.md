@@ -25,7 +25,7 @@ or [MobaXterm](https://mobaxterm.mobatek.net/download.html).
 
 The SSH program needs at least one parameter to connect to a remote server:
 
-* **Server Address** The web address of the server to connect to
+* **Server Address** The name or Internet address of the server to connect to
 
 Additional parameters may also be necessary:
 
