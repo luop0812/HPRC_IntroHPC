@@ -100,7 +100,24 @@ We'll open a shell tab under 'Clusters', select 'Terra shell access'.
 > ## The Command Prompt
 > The command prompt is the symbol or series of characters which precedes each shell command, and let the user know the shell is ready to receive commands.  For example, when you initially login to the HPC cluster your command prompt should resemble `[username@terra2 ~]$`. If your command prompt changes to `>`, the shell is expecting further input. Use the key-binding CTRL+C to escape shell commands, returning your prompt from `>` to `[username@terra2 ~]$`.  
 >
-> The command prompt is controlled by the shell variable PS1. Let's check the current PS1 setup with the command `echo $PS1`. If we change its value, our prompt will change too. Let's try with `'PS1='\s-\v\\$ '`. Let's change it back to the default on HRPC clusters `PS1='[\u@terra2 \W]\$ '`.
+> The command prompt is controlled by the shell variable PS1. Let's check the current PS1 setup with the command `echo $PS1`. 
+> ```
+> echo $PS1
+> ```
+> {: .bash}
+>
+> If we change its value, our prompt will change too. Let's try with `PS1='\s-\v\\$ '`. 
+> 
+> ```
+> PS1='\s-\v\\$ '
+> ```
+> {: .bash}
+> 
+> Let's change it back to the default on HRPC clusters `PS1='[\u@terra2 \W]\$ '`.
+>
+> ```
+> PS1='[\u@terra2 \W]\$ '
+> ```
 >
 > Make sure you can copy and paste this command into the shell tab, that will make the rest of this workshop much easier.
 >

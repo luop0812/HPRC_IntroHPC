@@ -136,6 +136,8 @@ Disk       Disk Usage      Limit    File Usage      Limit
 ```
 {: .output}
 
+You can also run `showquota` to see your quota. It will display the same information as shown above.
+
 ## Moving files to and from the remote system from and to your local computer
 
 It is often necessary to move data from your local computer to the remote system and vice versa.  
@@ -147,19 +149,25 @@ If you are on a Linux machine or Mac,  there are many ways to do this and we wil
 ### `scp` from your local computer to the remote system
 The most basic command line tool for moving files around is secure copy or `scp`.
 
-`scp` behaves similarily to `ssh` but with one additional input, the name of the file to be copied.  If we were in the shell on our local computer, the file we wanted to move was in our current directory, named "globus.tgz", and Nelle wanted to move it to her home directory on OSC then the command would be
+`scp` behaves similarily to `ssh` but with one additional input, the name of the file to be copied.  Log no to Terra use one of the methods we have learned (ssh, putty, ondemand shell access). List files in your home directory.
+```
+ls
+```
+{: .bash}
+
+Pick one file and copy it to your account on Ada with `scp`.
 	
 ~~~
-[local]$ scp fileToMove username@terra.tamu.edu:
+[Terra] scp fileToMove username@Ada.tamu.edu:
 ~~~
 {: .bash}
 	
 It should be expected that a password will be asked for and you should be prepared to provide it.
 
-Once the transfer is complete you should be able to use `ssh` to login to the remote system and see your file in your home directory.
+Once the transfer is complete you should be able to use `ssh` to login to Ada and see your file in your home directory.
 
 ~~~
-[remote]$ ls
+[Ada]$ ls
 ~~~
 {: .bash}
 
@@ -198,7 +206,7 @@ To download files from the Internet,
 the absolute best tool is `wget`.
 The syntax is relatively straightforward: `wget https://some_url/file.tar.gz`
 
-> ## Downloading the Drosophila genome
+> ## Downloading poisson-mpi.exe.tgz
 > Download the executable for poisson.sh from [https://github.com/luop0812/HPRC_IntroHPC/blob/master/poisson-mpi.exe.tgz](https://github.com/luop0812/HPRC_IntroHPC/blob/master/poisson-mpi.exe.tgz)
 > Download it to the cluster with `wget`.
 >
