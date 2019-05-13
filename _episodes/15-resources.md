@@ -74,6 +74,9 @@ Once the job completes, we can check resources used.
 >
 > ```
 > [username@terra1 poisson]$ sacct -j  2583373 --format="JobID,Elapsed,MaxRSS"
+> ```
+> {: .bash}
+> ```
 >       JobID    Elapsed     MaxRSS
 > ------------ ---------- ----------
 > 2583373        00:02:28
@@ -82,7 +85,7 @@ Once the job completes, we can check resources used.
 > 2583373.0      00:02:22     57560K
 > 
 > ```
-> {: .bash}
+> {: .output}
 >
 > It took two and half minutes and 57M memory to finish our job. For sure we have requested way too much memory and walltime. 
 > Now modify the job script and reduce the resources to at most three times what we have got from the test.
@@ -107,7 +110,7 @@ Resource usage summary:
 
 The output (if any) is above this job summary.
 ```
-{:.bash}
+{: .output}
 
 
 ## Do not run jobs on the login nodes
