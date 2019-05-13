@@ -238,7 +238,7 @@ JOBID        NAME                 USER                     PARTITION            
 {: .output}
 
 Sometimes we'll make a mistake and need to cancel a job.
-This can be done with the `cancel` command.
+This can be done with the `scancel` command.
 Let's submit a job and then cancel it using its job number.
 
 ```
@@ -302,12 +302,12 @@ When a job is done, information about the job will be stored in either log files
 |---|---|---|
 | Directive | #SBATCH | #BSUB |
 | node count | -N,\-\-nodes=<minnodes[-maxnodes]> | N/A |
-| core count | -n, \-\-ntasks=<count> | -n <count> |
-| tasks per node | \-\-ntasks-per-node=<count> | -R "span[ptile=count]" |
-| wall clock limit | -t, \-\-time=<days-hh:mm:ss> or <hh:mm:ss> | -W <hh:mm> |
-| memory per core |  \-\-mem-per-cpu=<size[units]> (unit is M/G/T) | -M <size> -R "rusage[mem=size]" | 
-| memory per node | N/A |  \-\-mem=<size[units]> |
-| queue | -p, \-\-partition=<queuename> | -q <queuename> |
+| core count | -n, \-\-ntasks=\<count\> | -n \<count\> |
+| tasks per node | \-\-ntasks-per-node=\<count\> | -R "span[ptile=count]" |
+| wall clock limit | -t, \-\-time=\<days-hh:mm:ss\> or \<hh:mm:ss\> | -W \<hh:mm\> |
+| memory per core |  \-\-mem-per-cpu=\<size[units]> (unit is M/G/T) | -M \<size\> -R "rusage[mem=size]" | 
+| memory per node | N/A |  \-\-mem=\<size[units]\> |
+| queue | -p, \-\-partition=\<queuename\> | -q \<queuename\> |
 
 
 ### User Commands
@@ -318,7 +318,7 @@ When a job is done, information about the job will be stored in either log files
 | submit a job |  sbatch jobfile | bsub < jobfile |
 | check job status | squeue [-u username] or sstat jobid | bjobs jobid |
 | cancel a job | scancel jobid | bkill jobid |
-| change job walltime | scontrol update jobid=<jobid> TimeLimit=<[days-]hours:minutes:seconds> | bmod -W [hour:]minute |
+| change job walltime | scontrol update jobid=\<jobid\> TimeLimit=<[days-]hours:minutes:seconds> | bmod -W [hour:]minute |
 | check job history/accounting info| sacct \-\-format=\<format\> -j [jobid] | bhist -n <days> | 
 
 
