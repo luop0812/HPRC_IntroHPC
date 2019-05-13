@@ -235,7 +235,7 @@ JOBID        NAME                 USER                     PARTITION            
 JOBID        NAME                 USER                     PARTITION              NODES  CPUS  STATE        TIME         TIME_LEFT    START_TIME         REASON                   NODELIST
 2583522      poisson              pingluo                  short                  1      2     RUNNING      1:55         1:58:05      2019-05-11T23:48:2 None                     tnxt-0665
 ```
-{ .output}
+{: .output}
 
 Sometimes we'll make a mistake and need to cancel a job.
 This can be done with the `cancel` command.
