@@ -8,7 +8,7 @@ questions:
 objectives:
 - "Submit a job and have it complete successfully."
 - "Understand how to make resource requests."
-- "Submit an interactive job."
+- "Submit a job for GUI applications."
 keypoints:
 - "The scheduler handles how compute resources are shared between users."
 - "Everything you do should be run through the scheduler."
