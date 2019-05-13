@@ -389,7 +389,6 @@ Open OnDemand makes it extreamly easy to run such application with just a few cl
 ![Abaqus](../files/Abaqus.png)
 
 
-
 ## Running Web Server Applications
 It is easy to run web server applications using Open OnDemand, such as Jupyter Notebook and Rstudio.
 
@@ -400,7 +399,7 @@ It is easy to run web server applications using Open OnDemand, such as Jupyter N
 >
 > Unpack the file with `tar xzvf JupyterNotebook.tgz`
 >
-> Find Jupyter Notebook App from the pull down menu. 
+> Find 'Jupyter Notebook' from the pulldown menu for Interactive Apps from the portal. 
 >
 > Submit Jupyter Notebook. When it starts, navigate to JupyterNotebook and view the notebook you just downloaded.
 {: .challenge}
