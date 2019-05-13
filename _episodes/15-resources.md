@@ -84,27 +84,30 @@ Once the job completes, we can check resources used.
 > ```
 > {: .bash}
 >
-> It took two and half minutes and 57M memory to finish our job. For sure we have requested way too much memory and walltime. Now modify the job script and reduce the resources to at most three times what we have got from the test.
+> It took two and half minutes and 57M memory to finish our job. For sure we have requested way too much memory and walltime. 
+> Now modify the job script and reduce the resources to at most three times what we have got from the test.
+> Submit the new job. When it is done, check its resource usage.
 >
-> LSF will write the actually walltime and memory used in the job standard output file. Checking the end of that file you will find out how much memory and wall time were actually used.
-> 
-> ```
-> Resource usage summary:
-> 
->     CPU time :                                   670.12 sec.
->     Max Memory :                                 33 MB
->     Average Memory :                             31.76 MB
->     Total Requested Memory :                     4000.00 MB
->     Delta Memory :                               3967.00 MB
->     Max Swap :                                   1 MB
->     Max Processes :                              10
->     Max Threads :                                11
-> 
-> The output (if any) is above this job summary.
-> 
-> ```
-> {:.bash}
 {: .challenge}
+
+LSF will write the actually walltime and memory used to the job standard output file. Checking the end of that file you will find out how much memory and wall time were actually used.
+You can use `bhist -l job_id` to view the job resource usage received from LSF log files. 
+ 
+```
+Resource usage summary:
+
+    CPU time :                                   670.12 sec.
+    Max Memory :                                 33 MB
+    Average Memory :                             31.76 MB
+    Total Requested Memory :                     4000.00 MB
+    Delta Memory :                               3967.00 MB
+    Max Swap :                                   1 MB
+    Max Processes :                              10
+    Max Threads :                                11
+
+The output (if any) is above this job summary.
+```
+{:.bash}
 
 
 ## Do not run jobs on the login nodes
